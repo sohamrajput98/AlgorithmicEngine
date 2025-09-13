@@ -62,3 +62,11 @@ npm run dev
 Notes
 Task 1 focused on reproducible dev environment and pinned dependencies.
 
+Optional dev/testing dependencies can be added later (backend/requirements-dev.txt, frontend/.npmrc).
+
+Do not commit your actual .env file.
+
+Status
+Task 1: Completed ✅
+
+Next: Database schema and basic backend APIs
