@@ -1,14 +1,16 @@
 #!/bin/bash
 
-# Set your source and backup destination
+# === Configuration ===
 SOURCE="/mnt/d/PROJECTS/AlgorithmicEngine"
 DEST="/mnt/d/BACKUPS"
 DATE=$(date +%Y-%m-%d_%H-%M-%S)
+BACKUP_DIR="$DEST/AlgorithmicEngine-$DATE"
 
-# Create backup folder
-mkdir -p "$DEST/AlgorithmicEngine-$DATE"
+# === Create backup folder ===
+mkdir -p "$BACKUP_DIR"
 
-# Copy everything
-cp -r "$SOURCE/" "$DEST/AlgorithmicEngine-$DATE"
+# === Copy files safely, excluding virtual environment and node_modules ===
+rsync -av --progress --exclude='.venv' --exclude='node_modules' "$SOURCE/" "$BACKUP_DIR/"
 
-echo "✅ Backup saved to: $DEST/AlgorithmicEngine-$DATE"
+echo "✅ Backup completed!"
+echo "Location: $BACKUP_DIR"
