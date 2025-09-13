@@ -9,7 +9,7 @@ mysql -u root -p"$ROOT_PASS" <<EOSQL
 set -e
 
 MYSQL_USER="root"
-MYSQL_PASSWORD="sohamrajput12"
+MYSQL_PASSWORD="sohamrajput12" # Replace with your MySQL root password
 
 mysql -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" <<EOF
 CREATE USER IF NOT EXISTS 'algo_user'@'localhost' IDENTIFIED BY 'strong_password';
