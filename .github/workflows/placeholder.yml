@@ -1,0 +1,41 @@
+# .github/workflows/placeholder.yml
+# OPTIONAL: Replace with real workflows later (tests, lint, deploy)
+
+name: Placeholder CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install fastapi uvicorn pymysql sqlalchemy alembic python-dotenv
+
+      - name: Node setup
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install frontend dependencies
+        run: |
+          cd frontend || echo "No frontend yet, skipping"
+          [ -d frontend ] && npm install || true
+
+      - name: CI status
+        run: echo "✅ Placeholder CI ran successfully!"
