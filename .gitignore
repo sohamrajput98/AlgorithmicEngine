@@ -27,3 +27,5 @@ build/
 # Docker
 *.pid
 *.log
+*.log
+!commits.log
