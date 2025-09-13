@@ -1,24 +1,64 @@
 # AlgorithmicEngine
 
-AlgorithmicEngine is a practice platform inspired by LeetCode.  
-It allows users to solve coding problems, track progress with badges, and explore adaptive problem suggestions.
+AlgorithmicEngine is a learning platform for practicing algorithmic problems, featuring personalized problem suggestions, badges, and a lightweight LeetCode-like interface.  
 
-## Features (planned)
-- Problem solving interface (with difficulty shown as ⭐)
-- User authentication
-- Adaptive question recommendations
-- Badges for achievements
-- Profile tracking
-- Export reports
+## Project Structure
 
-## Tech Stack
-- Backend: Python (FastAPI)
-- Database: MySQL
-- Frontend: React + Tailwind CSS
-- Auth: JWT
-- Deployment: GitHub + (Docker optional later)
+AlgorithmicEngine/
+├─ backend/ # FastAPI backend
+│ ├─ requirements.txt # pinned dependencies
+├─ frontend/ # React + Vite + Tailwind frontend
+│ ├─ package.json
+│ ├─ package-lock.json
+├─ .env.example # environment variables template
+├─ README.md
+├─ LICENSE
+├─ docs/ # documentation
+└─ scripts/ # helper scripts
 
-## Setup
-1. Copy `.env.example` → `.env` and update values.
-2. Run `scripts/setup_dev_env.sh` to install dependencies.
-3. Run `scripts/create_databases.sh` to create MySQL databases.
+bash
+Copy code
+
+## Setup Instructions
+
+### Backend
+
+1. Create a virtual environment and activate it:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+Install dependencies:
+
+bash
+Copy code
+pip install -r backend/requirements.txt
+Copy .env.example to .env and update the variables:
+
+bash
+Copy code
+cp .env.example .env
+Create databases (later, when script is ready):
+
+bash
+Copy code
+bash scripts/create_databases.sh
+Frontend
+Go to frontend folder:
+
+bash
+Copy code
+cd frontend
+Install dependencies:
+
+bash
+Copy code
+npm ci
+Run development server (later):
+
+bash
+Copy code
+npm run dev
+Notes
+Task 1 focused on reproducible dev environment and pinned dependencies.
+
