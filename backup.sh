@@ -13,4 +13,4 @@ mkdir -p "$BACKUP_DIR"
 rsync -av --progress --exclude='.venv' --exclude='node_modules' "$SOURCE/" "$BACKUP_DIR/"
 
 echo "✅ Backup completed!"
-echo "Location: $BACKUP_DIR"
+echo "Location: $BACKUP_DIR "
