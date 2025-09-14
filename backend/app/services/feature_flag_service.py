@@ -1,5 +1,6 @@
 from backend.app.models.feature_flag import FeatureFlag
 
-def is_enabled(flag_key: str):
-    # Always True for now
-    return True
+class FeatureFlagService:
+    def is_enabled(self, flag_key: str) -> bool:
+        # Always True for now
+        return True
