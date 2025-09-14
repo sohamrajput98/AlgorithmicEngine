@@ -1,0 +1,38 @@
+/* Reset and body */
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; color: #333; }
+
+/* Header */
+header { background:#1f2937; color:white; padding:15px 30px; display:flex; align-items:center; justify-content:space-between; }
+header h1 { font-size:24px; }
+nav a { color:white; text-decoration:none; margin-left:15px; font-weight:600; }
+nav a:hover { text-decoration:underline; }
+
+/* Main content */
+main { padding:30px; max-width:900px; margin:auto; }
+
+/* Buttons */
+button { background:#3b82f6; color:white; border:none; padding:8px 15px; border-radius:5px; cursor:pointer; font-weight:600; }
+button:hover { background:#2563eb; }
+
+/* Problem list */
+ul { list-style:none; margin-top:20px; }
+li { background:white; padding:15px; margin-bottom:12px; border-radius:8px; display:flex; justify-content:space-between; align-items:center; box-shadow:0 2px 8px rgba(0,0,0,0.1); transition: transform 0.2s; }
+li:hover { transform: translateY(-2px); }
+
+/* Textarea code editor */
+textarea { width:100%; font-family: 'Courier New', monospace; font-size:14px; padding:10px; border-radius:5px; border:1px solid #ccc; margin-top:10px; background:#f9fafb; }
+
+/* Result output */
+#result { background:#111; color:#0f0; padding:10px; margin-top:10px; border-radius:5px; white-space:pre-wrap; font-family: 'Courier New', monospace; }
+
+/* Profile */
+.profile-card { background:white; padding:20px; border-radius:10px; box-shadow:0 2px 10px rgba(0,0,0,0.1); margin-top:20px; }
+.profile-card h2 { margin-bottom:10px; }
+.profile-card img.badge { width:60px; margin:5px; transition: transform 0.2s; }
+.profile-card img.badge:hover { transform: scale(1.2); }
+
+/* Landing page */
+.landing-buttons { margin-top:20px; }
+.landing-buttons a { display:inline-block; margin-right:15px; padding:10px 20px; background:#10b981; color:white; font-weight:600; border-radius:5px; text-decoration:none; }
+.landing-buttons a:hover { background:#059669; }
