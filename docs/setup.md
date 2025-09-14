@@ -1,4 +1,4 @@
-# Setup Guide
+# Setup Guide updated
 
 1. Clone the repo:
    ```bash
