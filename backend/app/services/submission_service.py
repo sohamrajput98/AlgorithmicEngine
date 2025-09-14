@@ -1,6 +1,6 @@
-from backend.app.models.submission import Submission
-from backend.app.schemas.submission import SubmissionCreate
-from backend.app.database import SessionLocal
+from app.models.submission import Submission
+from app.schemas.submission import SubmissionCreate
+from app.database import SessionLocal
 
 class SubmissionService:
     def __init__(self):

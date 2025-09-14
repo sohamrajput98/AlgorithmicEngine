@@ -1,6 +1,6 @@
 # backend/app/models/feature_flag.py
 from sqlalchemy import Column, String, Boolean, Text
-from backend.app.database import Base
+from app.database import Base
 
 class FeatureFlag(Base):
     __tablename__ = "feature_flags"

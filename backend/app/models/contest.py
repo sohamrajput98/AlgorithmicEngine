@@ -1,7 +1,7 @@
 # backend/app/models/contest.py
 from sqlalchemy import Column, Integer, String, DateTime, Text
 from sqlalchemy.sql import func
-from backend.app.database import Base
+from app.database import Base
 
 class Contest(Base):
     __tablename__ = "contests"

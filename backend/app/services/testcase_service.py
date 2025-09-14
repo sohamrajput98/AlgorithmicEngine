@@ -1,6 +1,6 @@
-from backend.app.models.testcase import TestCase
-from backend.app.schemas.testcase import TestCaseCreate
-from backend.app.database import SessionLocal
+from app.models.testcase import TestCase
+from app.schemas.testcase import TestCaseCreate
+from app.database import SessionLocal
 
 class TestCaseService:
     def __init__(self):

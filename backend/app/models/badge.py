@@ -1,6 +1,6 @@
 # backend/app/models/badge.py
 from sqlalchemy import Column, Integer, String, Text
-from backend.app.database import Base
+from app.database import Base
 
 class Badge(Base):
     __tablename__ = "badges"

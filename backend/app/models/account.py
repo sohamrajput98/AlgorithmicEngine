@@ -1,7 +1,7 @@
 # backend/app/models/account.py
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
-from backend.app.database import Base
+from app.database import Base
 
 class Account(Base):
     __tablename__ = "accounts"

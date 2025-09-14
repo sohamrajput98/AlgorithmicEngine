@@ -1,6 +1,6 @@
-from backend.app.models.user import User
-from backend.app.schemas.user import UserCreate
-from backend.app.database import SessionLocal
+from app.models.user import User
+from app.schemas.user import UserCreate
+from app.database import SessionLocal
 
 class UserService:
     def __init__(self):

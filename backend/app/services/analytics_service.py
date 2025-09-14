@@ -1,4 +1,4 @@
-from backend.app.models.analytics import Analytics
+from app.models.analytics import Analytics
 
 class AnalyticsService:
     def get_user_stats(self, user_id: int):

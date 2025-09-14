@@ -1,8 +1,8 @@
 # backend/app/tests/run_all_services.py
-from backend.app.services.auth_service import AuthService
-from backend.app.services.user_service import UserService
-from backend.app.services.problem_service import ProblemService
-from backend.app.services.testcase_service import TestCaseService
+from app.services.auth_service import AuthService
+from app.services.user_service import UserService
+from app.services.problem_service import ProblemService
+from app.services.testcase_service import TestCaseService
 
 print("Testing AuthService")
 auth = AuthService()

@@ -1,5 +1,5 @@
-from backend.app.models.user import User
-from backend.app.database import SessionLocal
+from app.models.user import User
+from app.database import SessionLocal
 from passlib.hash import bcrypt
 import jwt
 from datetime import datetime, timedelta

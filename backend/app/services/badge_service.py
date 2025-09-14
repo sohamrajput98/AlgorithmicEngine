@@ -1,4 +1,4 @@
-from backend.app.models.badge import Badge
+from app.models.badge import Badge
 
 class BadgeService:
     def list_badges(self):

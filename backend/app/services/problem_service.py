@@ -1,6 +1,6 @@
-from backend.app.models.problem import Problem
-from backend.app.schemas.problem import ProblemCreate
-from backend.app.database import SessionLocal
+from app.models.problem import Problem
+from app.schemas.problem import ProblemCreate
+from app.database import SessionLocal
 
 class ProblemService:
     def __init__(self):

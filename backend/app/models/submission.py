@@ -2,7 +2,7 @@
 from sqlalchemy import Column, Integer, Text, String, ForeignKey, DateTime
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
-from backend.app.database import Base
+from app.database import Base
 
 class Submission(Base):
     __tablename__ = "submissions"
