@@ -1,15 +1,26 @@
 import sys
 import os
+
+# Inject project root into sys.path so 'backend' is resolvable
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # backend/alembic
+ROOT_DIR = os.path.abspath(os.path.join(BASE_DIR, "..", ".."))
+sys.path.insert(0, ROOT_DIR)
+
 from logging.config import fileConfig
 from sqlalchemy import engine_from_config, pool
 from alembic import context
 from dotenv import load_dotenv
+from backend.app.database import Base
+from backend.app import models
+
+# Metadata for autogeneration
+target_metadata = Base.metadata
 
 # Paths
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # backend/alembic
 ROOT_DIR = os.path.abspath(os.path.join(BASE_DIR, "..", ".."))  # project root
 
-# Load env
+# Load environment variables
 load_dotenv(os.path.join(ROOT_DIR, ".env"))
 
 # Get DB URL
@@ -24,13 +35,7 @@ if DATABASE_URL:
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-# Import models' Base
-sys.path.append(os.path.join(ROOT_DIR, "backend"))
-from app.database import Base  # noqa
-
-target_metadata = Base.metadata
-
-
+# Migration runners
 def run_migrations_offline():
     context.configure(
         url=DATABASE_URL,
@@ -38,10 +43,8 @@ def run_migrations_offline():
         literal_binds=True,
         dialect_opts={"paramstyle": "named"},
     )
-
     with context.begin_transaction():
         context.run_migrations()
-
 
 def run_migrations_online():
     connectable = engine_from_config(
@@ -49,14 +52,12 @@ def run_migrations_online():
         prefix="sqlalchemy.",
         poolclass=pool.NullPool,
     )
-
     with connectable.connect() as connection:
         context.configure(connection=connection, target_metadata=target_metadata)
-
         with context.begin_transaction():
             context.run_migrations()
 
-
+# Entry point
 if context.is_offline_mode():
     run_migrations_offline()
 else:
