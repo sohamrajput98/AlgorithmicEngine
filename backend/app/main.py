@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 from app.config import settings
 
 # Import routers from endpoints
@@ -14,7 +15,11 @@ from app.api.endpoints import (
     admin,
 )
 
-app = FastAPI(title="AlgorithmicEngine Backend")
+app = FastAPI(
+    title="AlgorithmicEngine Backend",
+    description="API for AlgorithmicEngine project - supports problems, submissions, badges, and more.",
+    version="1.0.0",
+)
 
 # Include routers
 app.include_router(health.router)
@@ -26,6 +31,9 @@ app.include_router(testcases.router)
 app.include_router(submissions.router)
 app.include_router(badges.router)
 app.include_router(admin.router)
+
+# Mount static files (e.g., badges, logos)
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 @app.get("/")
 async def root():
