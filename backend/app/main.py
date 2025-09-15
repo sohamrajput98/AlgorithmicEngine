@@ -1,6 +1,7 @@
 from fastapi import FastAPI
+from pathlib import Path
 from fastapi.staticfiles import StaticFiles
-from app.config import settings
+from .config import settings
 
 # Import routers from endpoints
 from app.api.endpoints import (
@@ -33,7 +34,9 @@ app.include_router(badges.router)
 app.include_router(admin.router)
 
 # Mount static files (e.g., badges, logos)
-app.mount("/static", StaticFiles(directory="static"), name="static")
+
+static_path = Path(__file__).resolve().parent.parent / "static"
+app.mount("/static", StaticFiles(directory=static_path), name="static")
 
 @app.get("/")
 async def root():
