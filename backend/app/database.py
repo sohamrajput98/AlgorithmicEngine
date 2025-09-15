@@ -3,11 +3,17 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from app.config import settings
 
-engine = create_engine(settings.DATABASE_URL, echo=True)
+# 🔧 Choose correct DB based on APP_ENV
+db_url = (
+    settings.TEST_DATABASE_URL
+    if settings.APP_ENV == "test"
+    else settings.DATABASE_URL
+)
+
+engine = create_engine(db_url, echo=True)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
-# Dependency for FastAPI routes
 def get_db():
     db = SessionLocal()
     try:
