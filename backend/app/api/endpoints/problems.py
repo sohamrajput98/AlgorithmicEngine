@@ -1,25 +1,49 @@
-# backend/app/api/endpoints/problems.py
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query
+from typing import List, Optional
+
+from app.schemas.problem import ProblemCreate, ProblemResponse, ProblemUpdate
+from app.services.problem_service import ProblemService
 
 router = APIRouter(prefix="/problems", tags=["problems"])
+service = ProblemService()
 
-# Simple demo problems with one sample testcase each
-DUMMY_PROBLEMS = [
-    {"id": 1, "title": "Print 42", "statement": "Print 42 to stdout", "stars": 1,
-     "sample_input": "", "sample_output": "42"},
-    {"id": 2, "title": "Sum Two", "statement": "Read two ints and print sum", "stars": 2,
-     "sample_input": "1 2", "sample_output": "3"},
-    {"id": 3, "title": "Echo", "statement": "Echo the input", "stars": 1,
-     "sample_input": "hello", "sample_output": "hello"},
-]
+def _model_to_response(p) -> dict:
+    return {
+        "id": p.id,
+        "title": p.title,
+        "statement": p.statement,
+        "stars": p.stars,
+        "tags": service._parse_tags(p.tags),
+        "difficulty_notes": p.difficulty_notes,
+    }
 
-@router.get("/")
-async def list_problems():
-    return DUMMY_PROBLEMS
+@router.post("/", response_model=ProblemResponse)
+def create_problem(payload: ProblemCreate):
+    dbp = service.create_problem(payload)
+    return _model_to_response(dbp)
 
-@router.get("/{problem_id}")
-async def get_problem(problem_id: int):
-    p = next((x for x in DUMMY_PROBLEMS if x["id"] == problem_id), None)
+@router.get("/", response_model=List[ProblemResponse])
+def list_problems(stars: Optional[int] = Query(None, ge=1, le=5), tag: Optional[str] = Query(None)):
+    items = service.list_problems(stars=stars, tag=tag)
+    return [_model_to_response(p) for p in items]
+
+@router.get("/{problem_id}", response_model=ProblemResponse)
+def get_problem(problem_id: int):
+    p = service.get_problem(problem_id)
     if not p:
         raise HTTPException(status_code=404, detail="Problem not found")
-    return p
+    return _model_to_response(p)
+
+@router.put("/{problem_id}", response_model=ProblemResponse)
+def update_problem(problem_id: int, payload: ProblemUpdate):
+    p = service.update_problem(problem_id, payload)
+    if not p:
+        raise HTTPException(status_code=404, detail="Problem not found")
+    return _model_to_response(p)
+
+@router.delete("/{problem_id}")
+def delete_problem(problem_id: int):
+    ok = service.delete_problem(problem_id)
+    if not ok:
+        raise HTTPException(status_code=404, detail="Problem not found")
+    return {"ok": True}
