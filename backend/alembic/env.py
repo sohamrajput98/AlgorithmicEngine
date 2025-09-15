@@ -3,8 +3,8 @@ import os
 
 # Inject project root into sys.path so 'backend' is resolvable
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # backend/alembic
-ROOT_DIR = os.path.abspath(os.path.join(BASE_DIR, "..", ".."))
-sys.path.insert(0, ROOT_DIR)
+BACKEND_DIR = os.path.abspath(os.path.join(BASE_DIR, ".."))
+sys.path.insert(0, BACKEND_DIR)
 
 from logging.config import fileConfig
 from sqlalchemy import engine_from_config, pool
@@ -24,7 +24,12 @@ ROOT_DIR = os.path.abspath(os.path.join(BASE_DIR, "..", ".."))  # project root
 load_dotenv(os.path.join(ROOT_DIR, ".env"))
 
 # Get DB URL
-DATABASE_URL = os.getenv("DATABASE_URL")
+APP_ENV = os.getenv("APP_ENV", "development")
+
+if APP_ENV == "testing":
+    DATABASE_URL = os.getenv("TEST_DATABASE_URL")
+else:
+    DATABASE_URL = os.getenv("DATABASE_URL")
 
 # Alembic Config
 config = context.config
