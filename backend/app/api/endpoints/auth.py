@@ -9,6 +9,7 @@ from sqlalchemy.exc import NoResultFound
 from app.schemas.user import UserCreate, UserLogin, Token, UserOut
 from app.config import settings
 from app import models, schemas
+import bcrypt
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -16,11 +17,13 @@ class AuthService:
     def __init__(self):
         self.db = SessionLocal()
 
+
+
     def hash_password(self, password: str) -> str:
-        return bcrypt.hash(password)
+      return bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
 
     def verify_password(self, password: str, hashed: str) -> bool:
-        return bcrypt.verify(password, hashed)
+      return bcrypt.checkpw(password.encode(), hashed.encode())
 
     def create_access_token(self, user_id: int) -> str:
         expire = datetime.utcnow() + timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
