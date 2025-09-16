@@ -1,72 +1,62 @@
-# AlgorithmicEngine
 
-AlgorithmicEngine is a learning platform for practicing algorithmic problems, featuring personalized problem suggestions, badges, and a lightweight LeetCode-like interface.  
 
-## Project Structure
+# ⚙️ AlgorithmicEngine
+
+**AlgorithmicEngine** is a modular learning platform for practicing algorithmic problems, featuring:
+- 🎯 Personalized problem suggestions  
+- 🏅 Badge system for progress tracking  
+- 🧩 Lightweight, LeetCode-style interface  
+
+Built for reproducibility, clarity, and future-proofing.
+
+## 🧱 Project Structure
 
 AlgorithmicEngine/
-├─ backend/ # FastAPI backend
-│ ├─ requirements.txt # pinned dependencies
-├─ frontend/ # React + Vite + Tailwind frontend
-│ ├─ package.json
-│ ├─ package-lock.json
-├─ .env.example # environment variables template
-├─ README.md
-├─ LICENSE
-├─ docs/ # documentation
-└─ scripts/ # helper scripts
+├── backend/        # FastAPI backend with pinned dependencies
+├── frontend/       # React + Vite + Tailwind UI
+├── scripts/        # CLI helpers (e.g., DB creation)
+├── docs/           # Documentation
+├── .env.example    # Environment template
+├── LICENSE
+└── README.md
+```
 
-bash
-Copy code
 
-## Setup Instructions
+## 🚀 Setup Instructions
 
 ### Backend
-
-1. Create a virtual environment and activate it:
-
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-Install dependencies:
-
-bash
-Copy code
 pip install -r backend/requirements.txt
-Copy .env.example to .env and update the variables:
-
-bash
-Copy code
 cp .env.example .env
-Create databases (later, when script is ready):
-
-bash
-Copy code
+# DB creation (script WIP)
 bash scripts/create_databases.sh
-Frontend
-Go to frontend folder:
 
-bash
-Copy code
+
+### Frontend
+```bash
 cd frontend
-Install dependencies:
-
-bash
-Copy code
 npm ci
-Run development server (later):
-
-bash
-Copy code
+# Dev server (WIP)
 npm run dev
-Notes
-Task 1 focused on reproducible dev environment and pinned dependencies.
+```
 
-Optional dev/testing dependencies can be added later (backend/requirements-dev.txt, frontend/.npmrc).
 
-Do not commit your actual .env file.
+## 🧠 Development Philosophy
 
-Status
-Task 1: Completed ✅
+- ✅ **Task 1 Complete**: Reproducible dev setup with pinned dependencies  
+- 🔒 `.env` is excluded from commits  
+- 🧪 Optional dev tooling to be added (`requirements-dev.txt`, `.npmrc`)  
+- 🛠️ CLI-first visibility and schema parity checks in progress  
+- 📦 Modular commit history and atomic task tracking enforced
 
-Next: Database schema and basic backend APIs
+
+
+## ⏭️ Next Steps
+
+- Align DB schema and backend API scaffolding  
+- Wire dummy data and test endpoints  
+- Polish frontend visuals for demo readiness  
+
+
