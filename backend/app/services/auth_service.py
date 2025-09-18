@@ -41,6 +41,8 @@ class AuthService:
         return new_user
 
     def login_user(self, user_login: UserLogin) -> Token:
+        print("Login attempt:", user_login.email)
+        print("Password entered:", user_login.password)
         try:
             user = self.db.query(User).filter(User.email == user_login.email).one()
         except NoResultFound:
