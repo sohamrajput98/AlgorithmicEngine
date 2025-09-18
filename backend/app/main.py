@@ -21,6 +21,15 @@ app = FastAPI(
     description="API for AlgorithmicEngine project - supports problems, submissions, badges, and more.",
     version="1.0.0",
 )
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],  # or ["*"] for dev
+    allow_credentials=True,
+    allow_methods=["*"],  # or ["POST", "GET", "OPTIONS"]
+    allow_headers=["*"],
+)
 
 # Include routers
 app.include_router(health.router)
