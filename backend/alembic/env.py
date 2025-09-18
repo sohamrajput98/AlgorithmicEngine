@@ -1,5 +1,6 @@
 import sys
 import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 # Inject project root into sys.path so 'backend' is resolvable
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # backend/alembic
