@@ -1,9 +1,14 @@
-# backend/app/api/endpoints/submissions.py
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel
+from typing import Dict, Any
 import tempfile, subprocess, os, shutil, textwrap
 
+from fastapi import Request
+from app.services.submission_service import SubmissionService
+from app.dependencies import get_current_user  # optional
+
 router = APIRouter(prefix="/submissions", tags=["submissions"])
+service = SubmissionService()
 
 class SubmissionIn(BaseModel):
     problem_id: int
@@ -11,11 +16,9 @@ class SubmissionIn(BaseModel):
     language: str = "python"
 
 def _run_python(code: str, timeout: int = 2):
-    # write code to temp file and run with python3
     tmpdir = tempfile.mkdtemp(prefix="submission_")
     try:
         path = os.path.join(tmpdir, "submission.py")
-        # ensure newline at EOF
         with open(path, "w", encoding="utf-8") as f:
             f.write(textwrap.dedent(code))
         proc = subprocess.run(["python3", path],
@@ -26,7 +29,6 @@ def _run_python(code: str, timeout: int = 2):
 
 @router.post("/")
 async def submit(sub: SubmissionIn):
-    # lazy import to avoid cycles
     from app.api.endpoints.problems import DUMMY_PROBLEMS
     prob = next((p for p in DUMMY_PROBLEMS if p["id"] == sub.problem_id), None)
     if prob is None:
@@ -48,4 +50,35 @@ async def submit(sub: SubmissionIn):
         "output": output,
         "stderr": err.strip(),
         "expected": expected,
+    }
+
+
+@router.post("/run")
+def submit_code(payload: Dict[str, Any], request: Request):
+    # Try to extract user from request state (if middleware sets it)
+    current_user = getattr(request.state, "user", None)
+
+    if current_user:
+        payload["user_id"] = getattr(current_user, "id", None)
+    else:
+        # Optional: assign a dummy user_id or skip it entirely
+        payload["user_id"] = None  # or use a default like 0
+
+    if "problem_id" not in payload or "code" not in payload:
+        raise HTTPException(status_code=400, detail="problem_id and code are required")
+
+    try:
+        submission = service.submit_and_run(payload, run_sample_only=True)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+    return {
+        "id": submission.id,
+        "problem_id": submission.problem_id,
+        "status": submission.status,
+        "passes": submission.passes,
+        "total": submission.total,
+        "runtime_ms": submission.runtime_ms,
+        "result_log": submission.result_log,
+        "created_at": getattr(submission, "created_at", None)
     }
