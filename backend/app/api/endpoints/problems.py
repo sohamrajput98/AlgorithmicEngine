@@ -7,6 +7,35 @@ from app.services.problem_service import ProblemService
 router = APIRouter(prefix="/problems", tags=["problems"])
 service = ProblemService()
 
+DUMMY_PROBLEMS = [
+    {
+        "id": 2,
+        "title": "Print Hello",
+        "statement": "Write a program that prints 'Hello'",
+        "expected": "Hello\n",
+        "tags": ["intro", "easy"],
+        "stars": 1,
+        "difficulty_notes": "Basic print statement"
+    },
+    {
+        "id": 3,
+        "title": "Add Two Numbers",
+        "statement": "Write a program that adds two numbers",
+        "expected": "7\n",
+        "tags": ["math", "easy"],
+        "stars": 2,
+        "difficulty_notes": "Simple arithmetic"
+    },
+     {
+        "id": 1,
+        "title": "Add Two Numbers",
+        "statement": "Write a program that adds two numbers",
+        "expected": "5\n",
+        "tags": ["math", "easy"],
+        "stars": 2,
+        "difficulty_notes": "Simple arithmetic"
+    }
+]
 def _model_to_response(p) -> dict:
     return {
         "id": p.id,
