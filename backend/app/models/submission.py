@@ -7,16 +7,18 @@ class Submission(Base):
     __tablename__ = "submissions"
 
     id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(Integer, ForeignKey("users.id"), nullable=True)  # ✅ made nullable
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=True)
     problem_id = Column(Integer, ForeignKey("problems.id"), nullable=False)
     code = Column(Text, nullable=False)
     language = Column(String(50))
     status = Column(String(50), default="queued")
+    output = Column(Text)           # ✅ add this
+    expected = Column(Text)         # ✅ add this
     runtime_ms = Column(Integer)
     memory_kb = Column(Integer)
     result_log = Column(Text)
-    passes = Column(Integer, default=0)        # ✅ added
-    total = Column(Integer, default=0)         # ✅ added
+    passes = Column(Integer, default=0)
+    total = Column(Integer, default=0)
     created_at = Column(DateTime, server_default=func.now())
 
     user = relationship("User", backref="submissions")
