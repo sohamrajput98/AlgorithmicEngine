@@ -1,11 +1,14 @@
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, Depends, Request, Query
 from pydantic import BaseModel
 from typing import Dict, Any
 import tempfile, subprocess, os, shutil, textwrap
 
-from fastapi import Request
+from sqlalchemy.orm import Session
 from app.services.submission_service import SubmissionService
 from app.dependencies import get_current_user  # optional
+from app.database import get_db
+from app.models.submission import Submission
+from app.schemas.submission import SubmissionOut  # ✅ assumes you’ve defined this
 
 router = APIRouter(prefix="/submissions", tags=["submissions"])
 service = SubmissionService()
@@ -56,17 +59,14 @@ async def submit(sub: SubmissionIn):
         "expected": expected,
     }
 
-
 @router.post("/run")
 def submit_code(payload: Dict[str, Any], request: Request):
-    # Try to extract user from request state (if middleware sets it)
     current_user = getattr(request.state, "user", None)
 
     if current_user:
         payload["user_id"] = getattr(current_user, "id", None)
     else:
-        # Optional: assign a dummy user_id or skip it entirely
-        payload["user_id"] = None  # or use a default like 0
+        payload["user_id"] = None
 
     if "problem_id" not in payload or "code" not in payload:
         raise HTTPException(status_code=400, detail="problem_id and code are required")
@@ -86,3 +86,13 @@ def submit_code(payload: Dict[str, Any], request: Request):
         "result_log": submission.result_log,
         "created_at": getattr(submission, "created_at", None)
     }
+
+# ✅ NEW: GET /submissions?user_id=4
+@router.get("/", response_model=list[SubmissionOut])
+def get_user_submissions(user_id: int = Query(...), db: Session = Depends(get_db)):
+    return (
+        db.query(Submission)
+        .filter(Submission.user_id == user_id)
+        .order_by(Submission.created_at.desc())
+        .all()
+    )
