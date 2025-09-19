@@ -28,3 +28,14 @@ class SubmissionResponse(SubmissionBase):
 
     class Config:
         orm_mode = True
+
+class SubmissionOut(BaseModel):
+    id: int
+    problem_id: int
+    status: str
+    output: Optional[str] = None
+    expected: Optional[str] = None
+    created_at: datetime
+
+    class Config:
+        orm_mode = True
