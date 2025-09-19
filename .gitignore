@@ -28,4 +28,4 @@ build/
 *.pid
 *.log
 *.log
-!commits.log
+!commits.log.env
