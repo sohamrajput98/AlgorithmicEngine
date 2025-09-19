@@ -8,6 +8,10 @@ class SubmissionBase(BaseModel):
     code: str
     language: str
 
+class SubmissionPayload(BaseModel):
+         problem_id: int
+         code: str
+         language: str = "python"
 
 class SubmissionCreate(SubmissionBase):
     pass
