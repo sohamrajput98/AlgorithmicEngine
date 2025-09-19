@@ -7,6 +7,7 @@ export const login = async (email, password) => {
     const res = await api.post('/auth/login', { email, password })
     console.log("Login response:", res.data)
     localStorage.setItem(TOKEN_KEY, res.data.access_token)
+    localStorage.setItem('user', JSON.stringify(res.data.user));
     return res.data
   } catch (err) {
     console.error("Login error:", err.response?.data || err.message)
