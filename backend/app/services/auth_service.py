@@ -40,7 +40,7 @@ class AuthService:
         print("🔥 Connected to DB:", db_name)
         return new_user
 
-    def login_user(self, user_login: UserLogin) -> Token:
+    def login_user(self, user_login: UserLogin) -> dict:
         print("Login attempt:", user_login.email)
         print("Password entered:", user_login.password)
         try:
@@ -50,7 +50,12 @@ class AuthService:
         if not self.verify_password(user_login.password, user.hashed_password):
             raise ValueError("Invalid credentials")
         access_token = self.create_access_token(user.id)
-        return Token(access_token=access_token, token_type="bearer")
+        return {
+    "access_token": access_token,
+    "token_type": "bearer",
+    "user": user
+}
+
 
     def verify_token(self, token: str) -> int | None:
         try:
