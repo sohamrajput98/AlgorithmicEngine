@@ -42,8 +42,12 @@ async def submit(sub: SubmissionIn):
         return {"status": "error", "reason": "timeout"}
 
     output = out.strip()
-    expected = str(prob.get("sample_output", "")).strip()
-    passed = (output == expected)
+    expected = str(prob.get("expected", "")).strip()
+    passed = (output.strip() == expected.strip())
+
+    print("Output:", repr(output))
+    print("Expected:", repr(expected))
+    print("Match:", passed)
 
     return {
         "status": "passed" if passed else "failed",
