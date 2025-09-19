@@ -11,6 +11,7 @@ import ProblemView from './pages/ProblemView';
 import Editor from './pages/Editor';
 import PrivateRoute from './components/PrivateRoute';
 import Navbar from './components/Navbar';
+import Submissions from './pages/Submissions';
 
 function Home() {
   return (
@@ -62,6 +63,14 @@ export default function App() {
           element={
             <PrivateRoute>
               <Editor />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/submissions"
+          element={
+            <PrivateRoute>
+              <Submissions />
             </PrivateRoute>
           }
         />
