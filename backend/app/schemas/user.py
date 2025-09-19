@@ -41,3 +41,9 @@ class UserOut(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class LoginResponse(BaseModel):
+    access_token: str
+    token_type: str
+    user: UserOut
