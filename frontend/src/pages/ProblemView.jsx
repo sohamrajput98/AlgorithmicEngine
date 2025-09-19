@@ -12,10 +12,11 @@ const ProblemView = () => {
   } = useQuery({
     queryKey: ['problem', id],
     queryFn: () => fetchProblemById(id),
+     retry: false // prevent retry loop on 404
   });
 
   if (isLoading) return <div className="p-6">Loading...</div>;
-  if (error) return <div className="p-6 text-red-600">Error loading problem</div>;
+  if (error) return <div className="p-6 text-red-600"> ❌ Error loading problem</div>;
 
   return (
     <div className="p-6">
