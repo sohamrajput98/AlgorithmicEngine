@@ -10,6 +10,7 @@ from app.schemas.user import UserCreate, UserLogin, Token, UserOut
 from app.config import settings
 from app import models, schemas
 import bcrypt
+from app.schemas.user import LoginResponse 
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -53,7 +54,11 @@ class AuthService:
         if not self.verify_password(user_login.password, user.hashed_password):
             raise ValueError("Invalid credentials")
         access_token = self.create_access_token(user.id)
-        return Token(access_token=access_token, token_type="bearer")
+        return {
+    "access_token": access_token,
+    "token_type": "bearer",
+    "user": user
+}
 
     def verify_token(self, token: str) -> int | None:
         try:
@@ -72,7 +77,7 @@ def register(user: UserCreate):
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-@router.post("/login", response_model=Token)
+@router.post("/login", response_model=LoginResponse)
 def login(user: UserLogin):
     try:
         return auth_service.login_user(user)
