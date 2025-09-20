@@ -9,7 +9,7 @@ service = ProblemService()
 
 DUMMY_PROBLEMS = [
     {
-        "id": 2,
+        "id": 1,
         "title": "Print Hello",
         "statement": "Write a program that prints 'Hello'",
         "expected": "Hello\n",
@@ -18,7 +18,7 @@ DUMMY_PROBLEMS = [
         "difficulty_notes": "Basic print statement"
     },
     {
-        "id": 3,
+        "id": 2,
         "title": "Add Two Numbers",
         "statement": "Write a program that adds two numbers",
         "expected": "7\n",
@@ -26,15 +26,15 @@ DUMMY_PROBLEMS = [
         "stars": 2,
         "difficulty_notes": "Simple arithmetic"
     },
-     {
-        "id": 1,
-        "title": "Add Two Numbers",
-        "statement": "Write a program that adds two numbers",
-        "expected": "5\n",
-        "tags": ["math", "easy"],
-        "stars": 2,
-        "difficulty_notes": "Simple arithmetic"
-    }
+    {
+    "id": 3,
+    "title": "Check Even Number",
+    "statement": "Write a one-line Python program that prints True if 6 is even",
+    "expected": "True\n",
+    "tags": ["logic", "easy"],
+    "stars": 1,
+    "difficulty_notes": "Basic modulo operation"
+}
 ]
 def _model_to_response(p) -> dict:
     return {
