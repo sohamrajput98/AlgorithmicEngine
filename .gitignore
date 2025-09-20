@@ -9,7 +9,7 @@ __pycache__/
 .venv/
 venv/
 .envrc
-
+env_check.py
 # Node
 node_modules/
 npm-debug.log*
