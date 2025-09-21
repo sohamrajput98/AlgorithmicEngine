@@ -1,5 +1,6 @@
 import time
 from typing import Dict, Any
+import json
 
 from app.database import SessionLocal
 from app.models.submission import Submission
@@ -89,6 +90,11 @@ class SubmissionService:
                 "stderr": stderr,
                 "runtime_ms": res.get("runtime_ms", 0),
             }
+            print("Running test case:", tc.id)
+            print("Code:", repr(code))
+            print("Input:", repr(input_data))
+            print("Expected:", repr(expected))
+            print("Runner result:", res)
             logs.append(log_entry)
 
             if ok:
@@ -98,7 +104,7 @@ class SubmissionService:
         s.total = total
         s.passes = passes
         s.runtime_ms = total_runtime
-        s.result_log = str(logs)
+        s.result_log = json.dumps(logs)  # ✅ Proper JSON encoding
         s.status = "accepted" if passes == total and total > 0 else ("failed" if passes < total else "error")
         self.db.commit()
         self.db.refresh(s)
