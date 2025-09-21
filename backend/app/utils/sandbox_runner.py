@@ -36,24 +36,27 @@ def _set_limits(time_limit_seconds: int, memory_limit_kb: int):
         pass
 
 def run_python(code: str, stdin_data: str = "", time_limit_ms: int = 1000, memory_limit_kb: int = 65536) -> Dict[str, Any]:
+    """Execute python code in a temporary directory with limits.
+    Returns dict: { stdout, stderr, returncode, runtime_ms, status }
     """
-    Execute python code in a temporary directory with limits.
-    Returns dict: { stdout, stderr, returncode, runtime_ms }
-    """
-    # translate ms -> seconds for CPU limit (round up)
     time_limit_seconds = max(1, int((time_limit_ms + 999) // 1000))
-
     tmpdir = tempfile.mkdtemp(prefix="sandbox_")
+
     try:
-        # write code file
+        # ✅ Write code to temp file
         script_path = os.path.join(tmpdir, "solution.py")
         with open(script_path, "w", encoding="utf-8") as f:
             f.write(code)
 
-        # build command
-        python_exec = sys.executable or "python3"
-        cmd = [python_exec, script_path]
+        # ✅ Debug: confirm file contents
+        try:
+            with open(script_path, "r", encoding="utf-8") as f:
+                print("Sandbox file contents:", repr(f.read()))
+        except Exception as e:
+            print("Error reading sandbox file:", e)
 
+        python_exec = sys.executable or "python3"
+        cmd = [python_exec, "-u", script_path]  # ✅ -u forces unbuffered stdout/stderr
         start = time.time()
         try:
             proc = subprocess.Popen(
@@ -66,7 +69,6 @@ def run_python(code: str, stdin_data: str = "", time_limit_ms: int = 1000, memor
                 text=True
             )
             try:
-                # wait with timeout (wall-clock) slightly larger than CPU limit
                 timeout_seconds = time_limit_seconds + 1
                 stdout, stderr = proc.communicate(input=stdin_data, timeout=timeout_seconds)
             except subprocess.TimeoutExpired:
@@ -92,6 +94,11 @@ def run_python(code: str, stdin_data: str = "", time_limit_ms: int = 1000, memor
         runtime_ms = int((end - start) * 1000)
         status = "ok" if proc.returncode == 0 else "runtime_error"
 
+        # ✅ Debug: confirm runner output
+        print("Runner stdout:", repr(stdout))
+        print("Runner stderr:", repr(stderr))
+        print("Return code:", proc.returncode)
+
         return {
             "stdout": stdout,
             "stderr": stderr,
@@ -101,7 +108,6 @@ def run_python(code: str, stdin_data: str = "", time_limit_ms: int = 1000, memor
         }
 
     finally:
-        # cleanup temp dir
         try:
             shutil.rmtree(tmpdir)
         except Exception:
