@@ -8,6 +8,7 @@ class Problem(Base):
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String(255), nullable=False)
     statement = Column(Text, nullable=False)
-    stars = Column(Integer, default=1)  # 1-5 rating
-    tags = Column(String(255)) # could be JSON string or M2M later
+    expected = Column(Text, nullable=True)  # added expected output
+    stars = Column(Integer, default=1)      # 1-5 rating
+    tags = Column(String(255))              # JSON string for tags
     difficulty_notes = Column(Text)
