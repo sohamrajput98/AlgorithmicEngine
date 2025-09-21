@@ -3,5 +3,8 @@ import { Navigate } from 'react-router-dom';
 import { isLoggedIn } from '../services/auth';
 
 export default function PrivateRoute({ children }) {
-  return children // temporarily bypass auth
+  if (!isLoggedIn()) {
+    return <Navigate to="/login" replace />;
+  }
+  return children;
 }
