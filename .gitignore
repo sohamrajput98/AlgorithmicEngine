@@ -10,6 +10,9 @@ __pycache__/
 venv/
 .envrc
 env_check.py
+dev.sh
+prod.sh
+test.sh
 # Node
 node_modules/
 npm-debug.log*
