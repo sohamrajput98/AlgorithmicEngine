@@ -4,13 +4,14 @@ import App from './App.jsx';
 import './styles/tailwind.css';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { BrowserRouter } from 'react-router-dom'; // ✅ Add this
+import { BrowserRouter } from 'react-router-dom';
 
+import { submitSolution } from './services/problems'; 
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter> {/* ✅ Wrap your app here */}
+    <BrowserRouter>
       <QueryClientProvider client={queryClient}>
         <App />
       </QueryClientProvider>
