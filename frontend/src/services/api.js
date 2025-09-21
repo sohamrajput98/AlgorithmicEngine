@@ -7,4 +7,9 @@ const api = axios.create({
   },
 });
 
+api.interceptors.request.use((config) => {
+  console.log("📤 Axios sending:", config.method, config.url, config.data);
+  return config;
+});
+
 export default api;
