@@ -1,7 +1,9 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
 from fastapi.staticfiles import StaticFiles
 from .config import settings
+import os
 
 # Import routers from endpoints
 from app.api.endpoints import (
@@ -21,13 +23,13 @@ app = FastAPI(
     description="API for AlgorithmicEngine project - supports problems, submissions, badges, and more.",
     version="1.0.0",
 )
-from fastapi.middleware.cors import CORSMiddleware
 
+# CORS middleware (keep dev server open)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5175"],  # or ["*"] for dev
+    allow_origins=["http://localhost:5175"],  # Vite dev server
     allow_credentials=True,
-    allow_methods=["*"],  # or ["POST", "GET", "OPTIONS"]
+    allow_methods=["*"],
     allow_headers=["*"],
 )
 
@@ -42,11 +44,20 @@ app.include_router(submissions.router)
 app.include_router(badges.router)
 app.include_router(admin.router)
 
-# Mount static files (e.g., badges, logos)
-
+# Mount static files (badges, logos)
 static_path = Path(__file__).resolve().parent.parent / "static"
 app.mount("/static", StaticFiles(directory=static_path), name="static")
 
+# Conditionally mount frontend build
+APP_ENV = os.getenv("APP_ENV", "development")
+
+if APP_ENV in ["test", "production"]:
+    frontend_dist = Path(__file__).resolve().parent.parent.parent / "frontend" / "dist"
+    if frontend_dist.exists():
+        app.mount("/", StaticFiles(directory=frontend_dist, html=True), name="frontend")
+
 @app.get("/")
 async def root():
-    return {"message": "Welcome to AlgorithmicEngine API"}
+    # Only return JSON message if in dev (otherwise frontend will handle "/")
+    if APP_ENV == "development":
+        return {"message": "Welcome to AlgorithmicEngine API"}
