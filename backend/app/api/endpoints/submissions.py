@@ -10,6 +10,7 @@ from app.database import get_db
 from app.models.submission import Submission
 from app.models.testcase import TestCase  # ✅ Import added
 from app.schemas.submission import SubmissionOut
+from app.models.problem import Problem  # ✅ Add this at the top if not already
 
 router = APIRouter(prefix="/submissions", tags=["submissions"])
 service = SubmissionService()
@@ -65,6 +66,13 @@ async def submit(request: Request):
         .first()
     )
 
+    # ✅ Fetch problem for complexity metadata
+    problem = (
+        service.db.query(Problem)
+        .filter(Problem.id == submission.problem_id)
+        .first()
+    )
+
     return {
         "id": submission.id,
         "problem_id": submission.problem_id,
@@ -77,7 +85,7 @@ async def submit(request: Request):
         "runtime": submission.runtime_ms,
         "memory": submission.memory_kb,
         "created_at": getattr(submission, "created_at", None),
-        "stderr": first_log.get("stderr"),  # ✅ Optional: helps debug failures
+        "stderr": first_log.get("stderr"),
     }
 
 # ✅ Alternate route (already patched earlier)
