@@ -1,13 +1,31 @@
-// src/components/Navbar.jsx
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from "react-router-dom";
+import { isLoggedIn } from '../services/auth';
 
-const Navbar = () => (
-  <nav className="p-4 bg-gray-100 flex gap-6 text-sm font-medium">
-    <Link to="/" className="text-blue-600 hover:underline">Home</Link>
-    <Link to="/problems" className="text-blue-600 hover:underline">Problems</Link>
-    <Link to="/editor/2" className="text-blue-600 hover:underline">Editor</Link>
-    <Link to="/dashboard" className="text-blue-600 hover:underline">Dashboard</Link>
-  </nav>
-)
+const Navbar = () => {
+  const location = useLocation();
+  const loggedIn = isLoggedIn();
 
-export default Navbar
+  const activeClass = (path) =>
+    location.pathname === path ? "text-blue-600 font-bold" : "text-gray-700 hover:text-blue-600";
+
+  return (
+    <nav className="bg-white shadow p-4 flex flex-wrap justify-between items-center">
+      <div className="flex gap-6 flex-wrap">
+        <Link to="/" className={activeClass("/")}>Home</Link>
+        {loggedIn && <>
+          <Link to="/dashboard" className={activeClass("/dashboard")}>Dashboard</Link>
+          <Link to="/problems" className={activeClass("/problems")}>Problems</Link>
+          <Link to="/editor/1" className={activeClass("/editor/1")}>Editor</Link>
+          <Link to="/analytics" className={activeClass("/analytics")}>Analytics</Link>
+          <Link to="/submissions" className={activeClass("/submissions")}>Submissions</Link>
+        </>}
+        {!loggedIn && <>
+          <Link to="/login" className={activeClass("/login")}>Login</Link>
+          <Link to="/register" className={activeClass("/register")}>Register</Link>
+        </>}
+      </div>
+    </nav>
+  );
+};
+
+export default Navbar;
