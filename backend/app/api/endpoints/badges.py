@@ -2,7 +2,11 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app.services.badge_service import BadgeService
+from app.services.badge_service import HARDCODED_BADGES
 import json
+from app.models.user_badge import UserBadge
+from app.models.badge import Badge
+
 router = APIRouter(prefix="/badges", tags=["badges"])
 
 @router.get("/")
@@ -37,12 +41,20 @@ def assign_badge(user_id: int, badge_key: str, db: Session = Depends(get_db)):
     return {"message": f"Badge '{badge_key}' assigned to user {user_id}"}
 
 @router.get("/user/{user_id}")
-def get_user_badges(user_id: int):
-    # Stub: always return first_submission for demo
-    return [{
-        "key": "first_submission",
-        "name": "First Submit",
-        "description": "Submitted your first solution",
-        "criteria": {},
-        "image_url": "/static/badges/first_submission.png"
-    }]
+def get_user_badges(user_id: int, db: Session = Depends(get_db)):
+    earned_keys = db.query(UserBadge.badge_key).filter(UserBadge.user_id == user_id).all()
+    earned_keys = [key for (key,) in earned_keys]
+
+    badges = db.query(Badge).filter(Badge.key.in_(earned_keys)).all()
+
+    return [
+        {
+            "id": b.id,
+            "key": b.key,
+            "name": b.name,
+            "description": b.description,
+            "criteria": json.loads(b.criteria_json or "{}"),
+            "image_url": b.icon_path,
+        }
+        for b in badges
+    ]
