@@ -12,10 +12,11 @@ import Editor from './pages/Editor';
 import PrivateRoute from './components/PrivateRoute';
 import Navbar from './components/Navbar';
 import Submissions from './pages/Submissions';
+import Analytics from "./pages/Analytics";
 
 function Home() {
   return (
-    <div className="flex flex-col items-center justify-center h-screen text-center">
+    <div className="flex flex-col items-center justify-center h-screen text-center bg-gray-50 p-6">
       <h1 className="text-4xl font-bold mb-4">AlgoEngine</h1>
       <p className="text-gray-600">Frontend skeleton is working ✅</p>
       <div className="mt-6 space-x-4">
@@ -26,6 +27,7 @@ function Home() {
   );
 }
 
+
 export default function App() {
   return (
     <>
@@ -34,51 +36,29 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route
-          path="/dashboard"
-          element={
-            <PrivateRoute>
-              <Dashboard />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/problems"
-          element={
-            <PrivateRoute>
-              <ProblemList />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/problems/:id"
-          element={
-            <PrivateRoute>
-              <ProblemView />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/editor/:id"
-          element={
-            <PrivateRoute>
-              <Editor />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/submissions"
-          element={
-            <PrivateRoute>
-              <Submissions />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="*"
-          element={<div className="p-6 text-red-600">404: Page Not Found</div>}
-        />
+
+        <Route path="/dashboard" element={
+          <PrivateRoute><Dashboard /></PrivateRoute>
+        } />
+        <Route path="/problems" element={
+          <PrivateRoute><ProblemList /></PrivateRoute>
+        } />
+        <Route path="/problems/:id" element={
+          <PrivateRoute><ProblemView /></PrivateRoute>
+        } />
+        <Route path="/editor/:id" element={
+          <PrivateRoute><Editor /></PrivateRoute>
+        } />
+        <Route path="/submissions" element={
+          <PrivateRoute><Submissions /></PrivateRoute>
+        } />
+        <Route path="/analytics" element={
+          <PrivateRoute><Analytics /></PrivateRoute>
+        } />
+
+        <Route path="*" element={<div className="p-6 text-red-600">404: Page Not Found</div>} />
       </Routes>
     </>
   );
 }
+
