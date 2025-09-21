@@ -15,6 +15,7 @@ from app.api.endpoints import (
     testcases,
     submissions,
     badges,
+    analytics,
     admin,
 )
 
@@ -42,11 +43,10 @@ app.include_router(problems.router)
 app.include_router(testcases.router)
 app.include_router(submissions.router)
 app.include_router(badges.router)
+app.include_router(analytics.router)
 app.include_router(admin.router)
 
-# Mount static files (badges, logos)
-static_path = Path(__file__).resolve().parent.parent / "static"
-app.mount("/static", StaticFiles(directory=static_path), name="static")
+
 
 # Conditionally mount frontend build
 APP_ENV = os.getenv("APP_ENV", "development")
