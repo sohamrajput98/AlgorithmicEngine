@@ -1,5 +1,6 @@
 // frontend/src/services/problems.js
 import axios from './api';
+import { getToken } from './auth';
 
 export const fetchProblems = async ({ stars, tag, search, sort_by, order, page, limit }) => {
   const params = new URLSearchParams();
@@ -26,22 +27,19 @@ export const fetchSimilarProblems = async (id, limit = 5) => {
 };
 
 export const submitSolution = async ({ problem_id, code, language = "python" }) => {
-  const payload = {
-    problem_id,
-    code,
-    language,
-  };
+  console.log("📡 submitSolution called with:", { problem_id, code, language });
 
-  console.log("Submitting payload:", payload);
-
-  // 🛡️ Guard against missing fields
-  if (!payload.problem_id || !payload.code) {
+  if (!problem_id || !code) {
+    console.warn("⚠️ Skipping submission due to missing fields");
     throw new Error("❌ Missing problem_id or code in submission payload");
   }
 
-  const res = await axios.post('/submissions/', payload, {
+  console.log("📤 About to POST /submissions");
+
+  const res = await axios.post('/submissions/', { problem_id, code, language }, {
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${getToken()}`,
     },
   });
 
