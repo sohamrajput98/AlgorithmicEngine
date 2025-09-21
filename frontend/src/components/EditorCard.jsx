@@ -1,4 +1,4 @@
-import { useState, Suspense, lazy } from 'react';
+import React, { useState, Suspense, lazy, useEffect } from 'react';
 import { submitSolution } from '../services/problems';
 import TestResultsCard from './TestResultsCard';
 
@@ -10,11 +10,16 @@ const EditorCard = ({ problemId, language: initialLang = 'python' }) => {
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    console.log("🧩 EditorCard mounted with problemId:", problemId);
+  }, [problemId]);
+
   const handleSubmit = async () => {
     const trimmedCode = code.trim();
     const parsedId = Number(problemId);
 
-    // 🛡️ Guard against invalid input
+    console.log("🧪 handleSubmit triggered");
+
     if (!trimmedCode) {
       setResult({ status: 'error', reason: '❌ Code is empty' });
       return;
@@ -36,12 +41,14 @@ const EditorCard = ({ problemId, language: initialLang = 'python' }) => {
     setLoading(true);
     try {
       const res = await submitSolution(payload);
+      console.log("✅ Submission response:", res);
       setResult(res);
 
       if (res.status?.toLowerCase().includes('accept')) {
         localStorage.setItem(`accepted_problem_${parsedId}`, 'true');
       }
     } catch (err) {
+      console.error("❌ Submission failed:", err);
       setResult({ status: 'error', reason: err.message || 'Unknown error' });
     } finally {
       setLoading(false);
@@ -54,12 +61,13 @@ const EditorCard = ({ problemId, language: initialLang = 'python' }) => {
   };
 
   return (
-    <div className="p-4 border rounded-lg shadow-lg bg-white">
-      <div className="flex flex-wrap gap-2 mb-3 items-center">
+    <div className="p-4 md:p-6 bg-gray-50 rounded-2xl shadow-lg max-w-5xl mx-auto">
+      {/* Controls */}
+      <div className="flex flex-wrap gap-3 mb-4 items-center">
         <select
           value={language}
           onChange={e => setLanguage(e.target.value)}
-          className="border px-2 py-1 rounded"
+          className="border px-3 py-1 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
         >
           <option value="python">Python</option>
           <option value="javascript">JavaScript</option>
@@ -68,22 +76,23 @@ const EditorCard = ({ problemId, language: initialLang = 'python' }) => {
         <button
           onClick={handleSubmit}
           disabled={loading}
-          className="bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700 disabled:opacity-50 transition"
+          className="bg-gradient-to-r from-green-500 to-teal-500 text-white px-5 py-1 rounded-lg shadow hover:from-green-600 hover:to-teal-600 disabled:opacity-50 transition"
         >
           {loading ? 'Running...' : 'Run Code'}
         </button>
 
         <button
           onClick={handleReset}
-          className="bg-gray-200 px-3 py-1 rounded hover:bg-gray-300 transition"
+          className="bg-gray-200 px-4 py-1 rounded-lg hover:bg-gray-300 transition"
         >
           Reset
         </button>
       </div>
 
-      <Suspense fallback={<div className="animate-pulse p-4 bg-gray-100 rounded">Loading editor...</div>}>
+      {/* Editor */}
+      <Suspense fallback={<div className="animate-pulse p-6 bg-gray-200 rounded-lg">Loading editor...</div>}>
         <MonacoEditor
-          height="300px"
+          height="350px"
           language={language}
           value={code}
           onChange={setCode}
@@ -92,11 +101,18 @@ const EditorCard = ({ problemId, language: initialLang = 'python' }) => {
             fontSize: 14,
             wordWrap: 'on',
             automaticLayout: true,
+            scrollBeyondLastLine: false,
           }}
+          className="rounded-lg shadow-inner"
         />
       </Suspense>
 
-      {result && <TestResultsCard result={result} />}
+      {/* Results */}
+      {result && (
+        <div className="mt-5">
+          <TestResultsCard result={result} />
+        </div>
+      )}
     </div>
   );
 };
