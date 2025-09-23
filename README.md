@@ -53,10 +53,6 @@ npm run dev
 
 
 
-## ⏭️ Next Steps
 
-- Align DB schema and backend API scaffolding  
-- Wire dummy data and test endpoints  
-- Polish frontend visuals for demo readiness  
 
 
