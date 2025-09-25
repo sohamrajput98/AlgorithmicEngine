@@ -70,6 +70,8 @@ const EditorCard = ({ problemId, language: initialLang = 'python' }) => {
           className="border px-3 py-1 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
         >
           <option value="python">Python</option>
+          <option value="cpp">C++</option>
+          <option value="java">Java</option>
           <option value="javascript">JavaScript</option>
         </select>
 
