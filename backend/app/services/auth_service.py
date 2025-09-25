@@ -58,8 +58,11 @@ class AuthService:
 
 
     def verify_token(self, token: str) -> int | None:
-        try:
-            payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
-            return payload["sub"]
-        except jwt.PyJWTError:
-            return None
+     try:
+        print("🔍 Incoming token:", token)
+        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
+        print("✅ Token payload:", payload)
+        return payload.get("sub")  # ✅ Match your token structure
+     except jwt.PyJWTError as e:
+        print("❌ Token verification failed:", e)
+        return None
