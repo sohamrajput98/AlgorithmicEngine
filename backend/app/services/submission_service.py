@@ -1,12 +1,12 @@
 import time
-from typing import Dict, Any
 import json
+from typing import Dict, Any
 
 from app.database import SessionLocal
 from app.models.submission import Submission
 from app.models.testcase import TestCase
 from app.schemas.submission import SubmissionCreate
-from app.utils.sandbox_runner import run_python
+from app.utils.language_runner import RUNNER_MAP  # ✅ NEW
 
 class SubmissionService:
     def __init__(self):
@@ -44,7 +44,21 @@ class SubmissionService:
         self.db.add(s)
         self.db.commit()
         self.db.refresh(s)
+        print("✅ Creating submission with user_id:", payload.get("user_id"))
         return s
+
+    def run_code(self, language: str, code: str, input_data: str, time_limit_ms: int, memory_limit_kb: int) -> Dict[str, Any]:
+        language = language.lower()
+        runner = RUNNER_MAP.get(language)
+        if runner:
+            return runner(code, stdin_data=input_data, time_limit_ms=time_limit_ms, memory_limit_kb=memory_limit_kb)
+        return {
+            "stdout": "",
+            "stderr": f"Unsupported language: {language}",
+            "returncode": -1,
+            "runtime_ms": 0,
+            "status": "error"
+        }
 
     def evaluate_submission(self, submission_id: int, run_sample_only: bool = True) -> Submission:
         s: Submission = self.db.query(Submission).filter(Submission.id == submission_id).first()
@@ -71,9 +85,15 @@ class SubmissionService:
             memory_limit_kb = getattr(tc, "memory_limit_kb", 65536) or 65536
 
             try:
-                res = run_python(code, stdin_data=input_data, time_limit_ms=time_limit_ms, memory_limit_kb=memory_limit_kb)
+                res = self.run_code(s.language, code, input_data, time_limit_ms, memory_limit_kb)
             except Exception as e:
-                res = {"stdout": "", "stderr": f"[runner error] {e}", "returncode": -1, "runtime_ms": 0, "status": "error"}
+                res = {
+                    "stdout": "",
+                    "stderr": f"[runner error] {e}",
+                    "returncode": -1,
+                    "runtime_ms": 0,
+                    "status": "error"
+                }
 
             ok = False
             stdout = (res.get("stdout") or "").strip()
@@ -104,7 +124,7 @@ class SubmissionService:
         s.total = total
         s.passes = passes
         s.runtime_ms = total_runtime
-        s.result_log = json.dumps(logs)  # ✅ Proper JSON encoding
+        s.result_log = json.dumps(logs)
         s.status = "accepted" if passes == total and total > 0 else ("failed" if passes < total else "error")
         self.db.commit()
         self.db.refresh(s)
