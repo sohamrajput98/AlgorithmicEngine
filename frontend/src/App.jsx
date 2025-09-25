@@ -13,19 +13,7 @@ import PrivateRoute from './components/PrivateRoute';
 import Navbar from './components/Navbar';
 import Submissions from './pages/Submissions';
 import Analytics from "./pages/Analytics";
-
-function Home() {
-  return (
-    <div className="flex flex-col items-center justify-center h-screen text-center bg-gray-50 p-6">
-      <h1 className="text-4xl font-bold mb-4">AlgoEngine</h1>
-      <p className="text-gray-600">Frontend skeleton is working ✅</p>
-      <div className="mt-6 space-x-4">
-        <Link to="/login" className="px-4 py-2 bg-blue-500 text-white rounded-lg">Login</Link>
-        <Link to="/register" className="px-4 py-2 bg-green-500 text-white rounded-lg">Register</Link>
-      </div>
-    </div>
-  );
-}
+import Home from './pages/Home'; // ✅ updated import
 
 
 export default function App() {
@@ -61,4 +49,3 @@ export default function App() {
     </>
   );
 }
-
