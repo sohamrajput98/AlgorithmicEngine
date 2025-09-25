@@ -5,23 +5,21 @@ import tempfile, subprocess, os, shutil, textwrap, json
 
 from sqlalchemy.orm import Session
 from app.services.submission_service import SubmissionService
-from app.dependencies import get_current_user
-from app.database import get_db
+from app.dependencies import get_current_user, get_db
 from app.models.submission import Submission
-from app.models.testcase import TestCase  # ✅ Import added
+from app.models.testcase import TestCase
 from app.schemas.submission import SubmissionOut
-from app.models.problem import Problem  # ✅ Add this at the top if not already
+from app.models.problem import Problem
+from app.models.user import User
 
 router = APIRouter(prefix="/submissions", tags=["submissions"])
 service = SubmissionService()
 
-# ✅ Schema for incoming submission
 class SubmissionIn(BaseModel):
     problem_id: int
     code: str
     language: str = "python"
 
-# ✅ Run Python code in a sandboxed temp file
 def _run_python(code: str, timeout: int = 2):
     tmpdir = tempfile.mkdtemp(prefix="submission_")
     try:
@@ -34,9 +32,11 @@ def _run_python(code: str, timeout: int = 2):
     finally:
         shutil.rmtree(tmpdir)
 
-# ✅ Main submission endpoint (now returns full DB-backed response)
 @router.post("/")
-async def submit(request: Request):
+async def submit(
+    request: Request,
+    current_user: User = Depends(get_current_user)
+):
     try:
         body = await request.json()
         print("RAW BODY:", body)
@@ -45,28 +45,24 @@ async def submit(request: Request):
     except Exception as e:
         raise HTTPException(status_code=422, detail=f"Payload error: {str(e)}")
 
-    # ✅ Create submission record
     payload = sub.dict()
-    payload["user_id"] = None  # or extract from request.state if needed
+    payload["user_id"] = current_user.id
     print("Payload before submit_and_run:", payload)
 
     submission = service.submit_and_run(payload, run_sample_only=True)
 
-    # ✅ Parse result_log to extract actual output
     try:
         logs = json.loads(submission.result_log)
         first_log = logs[0] if logs else {}
     except Exception:
         first_log = {}
 
-    # ✅ Fetch sample test case for metadata
     tc = (
         service.db.query(TestCase)
         .filter(TestCase.problem_id == submission.problem_id, TestCase.is_sample == True)
         .first()
     )
 
-    # ✅ Fetch problem for complexity metadata
     problem = (
         service.db.query(Problem)
         .filter(Problem.id == submission.problem_id)
@@ -88,11 +84,12 @@ async def submit(request: Request):
         "stderr": first_log.get("stderr"),
     }
 
-# ✅ Alternate route (already patched earlier)
 @router.post("/run")
-def submit_code(payload: Dict[str, Any], request: Request):
-    current_user = getattr(request.state, "user", None)
-    payload["user_id"] = getattr(current_user, "id", None) if current_user else None
+def submit_code(
+    payload: Dict[str, Any],
+    current_user: User = Depends(get_current_user)
+):
+    payload["user_id"] = current_user.id
 
     if "problem_id" not in payload or "code" not in payload:
         raise HTTPException(status_code=400, detail="problem_id and code are required")
@@ -102,6 +99,14 @@ def submit_code(payload: Dict[str, Any], request: Request):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+    # ✅ Extract actual output from result_log
+    try:
+        logs = json.loads(submission.result_log)
+        first_log = logs[0] if logs else {}
+    except Exception:
+        first_log = {}
+
+    # ✅ Fetch sample testcase for complexity
     tc = (
         service.db.query(TestCase)
         .filter(TestCase.problem_id == submission.problem_id, TestCase.is_sample == True)
@@ -112,7 +117,7 @@ def submit_code(payload: Dict[str, Any], request: Request):
         "id": submission.id,
         "problem_id": submission.problem_id,
         "status": submission.status,
-        "output": tc.expected_output if tc else None,
+        "output": first_log.get("stdout"),  # ✅ Actual output
         "expected": tc.expected_output if tc else None,
         "language": submission.language,
         "time_complexity": getattr(tc, "time_complexity", None),
@@ -120,14 +125,45 @@ def submit_code(payload: Dict[str, Any], request: Request):
         "runtime": submission.runtime_ms,
         "memory": submission.memory_kb,
         "created_at": getattr(submission, "created_at", None),
+        "stderr": first_log.get("stderr"),
     }
 
-# ✅ Get submissions for a user
-@router.get("/", response_model=List[SubmissionOut])
+@router.get("/")
 def get_user_submissions(user_id: int = Query(...), db: Session = Depends(get_db)):
-    return (
+    submissions = (
         db.query(Submission)
         .filter(Submission.user_id == user_id)
         .order_by(Submission.created_at.desc())
         .all()
     )
+
+    enriched = []
+    for sub in submissions:
+        try:
+          logs = json.loads(sub.result_log)
+          first_log = logs[0] if logs else {}
+        except Exception:
+          first_log = {}
+
+        tc = (
+            db.query(TestCase)
+            .filter(TestCase.problem_id == sub.problem_id, TestCase.is_sample == True)
+            .first()
+        )
+
+        enriched.append({
+            "id": sub.id,
+            "problem_id": sub.problem_id,
+            "status": sub.status,
+            "output": first_log.get("stdout"),
+            "expected": tc.expected_output if tc else None,
+            "language": sub.language,
+            "time_complexity": getattr(tc, "time_complexity", None),
+            "space_complexity": getattr(tc, "space_complexity", None),
+            "runtime": sub.runtime_ms,
+            "memory": sub.memory_kb,
+            "created_at": sub.created_at,
+            "stderr": first_log.get("stderr"),
+        })
+
+    return enriched
