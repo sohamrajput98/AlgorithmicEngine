@@ -6,7 +6,8 @@ class TestCaseBase(BaseModel):
     input_data: str
     expected_output: str
     is_sample: bool = Field(False, description="Sample (visible) vs hidden")
-
+    time_complexity: Optional[str] = None
+    space_complexity: Optional[str] = None
 class TestCaseCreate(TestCaseBase):
     problem_id: int
     time_limit_ms: Optional[int] = Field(None, ge=1)
