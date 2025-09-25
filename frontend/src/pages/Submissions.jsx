@@ -133,15 +133,16 @@ export default function Submissions() {
               <span>
                 <strong>Space Complexity:</strong> {sub.space_complexity ?? "—"}
               </span>
-              {sub.runtime && (
-                <span>
-                  <strong>Runtime:</strong> {sub.runtime}
-                </span>
+             {sub.runtime > 0 && (
+              <span>
+                 <strong>Runtime:</strong> {sub.runtime}
+              </span>
               )}
-              {sub.memory && (
-                <span>
-                  <strong>Memory:</strong> {sub.memory}
-                </span>
+             {sub.memory > 0 && (
+              <span>
+                <strong>Memory:</strong> {sub.memory}
+             </span>
+
               )}
               <span>
                 <Link
