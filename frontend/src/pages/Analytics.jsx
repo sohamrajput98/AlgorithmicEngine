@@ -3,6 +3,18 @@ import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import api from "../services/api";
 import { getToken, logout } from "../services/auth";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+  Legend,
+} from "recharts";
 
 export default function Analytics() {
   const navigate = useNavigate();
@@ -67,6 +79,56 @@ export default function Analytics() {
         </div>
       )}
 
+      {/* Analytics Graphs */}
+      {analytics && (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+          {/* Submissions Bar Chart */}
+          <div className="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+            <h2 className="text-xl font-bold mb-4">Submission Overview</h2>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart
+                data={[
+                  { name: "Accepted", value: analytics.accepted_submissions },
+                  { name: "Failed", value: analytics.failed_submissions },
+                ]}
+              >
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Bar dataKey="value" fill="#3b82f6" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Languages Pie Chart */}
+          <div className="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+            <h2 className="text-xl font-bold mb-4">Languages Used</h2>
+            <ResponsiveContainer width="100%" height={300}>
+              <PieChart>
+                <Pie
+                  data={analytics.languages_breakdown || []}
+                  dataKey="count"
+                  nameKey="language"
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={100}
+                  label
+                >
+                  {(analytics.languages_breakdown || []).map((entry, index) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={["#3b82f6", "#ef4444", "#10b981", "#f59e0b"][index % 4]}
+                    />
+                  ))}
+                </Pie>
+                <Legend />
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+      )}
+
       {/* Submission Stats by Problem */}
       {analytics?.problem_stats && (
         <div className="mb-8">
@@ -88,52 +150,53 @@ export default function Analytics() {
       )}
 
       {/* Badges */}
-   {/* Badges Section inside Analytics.jsx*/ }
-{badges && badges.length > 0 && (
-  <div className="mb-8">
-    <h2 className="text-2xl font-bold mb-4">Badges Earned</h2>
-    <div className="flex flex-wrap gap-6">
-      {badges.map((badge, index) => {
-        const earned = index === 0; // first badge visually unlocked
-        return (
-          <div
-            key={badge.key}
-            className={`bg-white p-4 rounded-2xl shadow-lg w-48 flex flex-col items-center text-center transition-transform transform hover:scale-105 ${
-              earned ? "opacity-100" : "opacity-40 grayscale"
-            }`}
-            style={{ userSelect: "none" }} // disable text selection
-          >
-            <img
-              src={`/badges/${badge.key}.png`}
-              alt={badge.name}
-              className={`w-20 h-20 mb-2 transition-transform ${
-                earned ? "hover:scale-110" : ""
-              }`}
-              style={{ userSelect: "none" }} // disable selection for image
-            />
-            <h3
-              className={`font-semibold mb-1 transition-colors ${
-                earned ? "hover:text-blue-600" : ""
-              }`}
-              style={{ userSelect: "none" }}
-            >
-              {badge.name}
-            </h3>
-            <p className="text-sm text-gray-600" style={{ userSelect: "none" }}>
-              {badge.description}
-            </p>
-            {!earned && (
-              <span className="mt-2 text-red-500 text-sm font-semibold" style={{ userSelect: "none" }}>
-                🔒 Locked
-              </span>
-            )}
+      {badges && badges.length > 0 && (
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold mb-4">Badges Earned</h2>
+          <div className="flex flex-wrap gap-6">
+            {badges.map((badge, index) => {
+              const earned = index === 0; // first badge visually unlocked
+              return (
+                <div
+                  key={badge.key}
+                  className={`bg-white p-4 rounded-2xl shadow-lg w-48 flex flex-col items-center text-center transition-transform transform hover:scale-105 ${
+                    earned ? "opacity-100" : "opacity-40 grayscale"
+                  }`}
+                  style={{ userSelect: "none" }}
+                >
+                  <img
+                    src={`/badges/${badge.key}.png`}
+                    alt={badge.name}
+                    className={`w-20 h-20 mb-2 transition-transform ${
+                      earned ? "hover:scale-110" : ""
+                    }`}
+                    style={{ userSelect: "none" }}
+                  />
+                  <h3
+                    className={`font-semibold mb-1 transition-colors ${
+                      earned ? "hover:text-blue-600" : ""
+                    }`}
+                    style={{ userSelect: "none" }}
+                  >
+                    {badge.name}
+                  </h3>
+                  <p className="text-sm text-gray-600" style={{ userSelect: "none" }}>
+                    {badge.description}
+                  </p>
+                  {!earned && (
+                    <span
+                      className="mt-2 text-red-500 text-sm font-semibold"
+                      style={{ userSelect: "none" }}
+                    >
+                      🔒 Locked
+                    </span>
+                  )}
+                </div>
+              );
+            })}
           </div>
-        );
-      })}
-    </div>
-  </div>
-)}
-
+        </div>
+      )}
 
       {/* Back Button */}
       <div className="mt-8">
