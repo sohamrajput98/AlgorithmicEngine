@@ -3,37 +3,37 @@ const TestResultsCard = ({ result }) => {
   const isAccepted = status.toLowerCase().includes('accept');
 
   return (
-    <div className={`mt-4 p-4 rounded-xl shadow-md transition-all duration-300
-      ${isAccepted ? 'bg-green-50 border-green-400' : 'bg-red-50 border-red-400'} border`}>
-      
-      <div className="flex items-center justify-between mb-3">
-        <span className={`font-bold ${isAccepted ? 'text-green-600' : 'text-red-600'}`}>
+    <div className={`mt-4 p-6 rounded-2xl shadow-xl transition-all duration-300 border ${
+      isAccepted ? 'bg-gradient-to-r from-green-800 to-green-600 border-green-500' : 'bg-gradient-to-r from-red-800 to-red-600 border-red-500'
+    } text-white`}>
+      <div className="flex items-center justify-between mb-4">
+        <span className="font-bold text-lg">
           Status: {status}
         </span>
-        <span className="text-sm text-gray-500">Language: {result.language ?? '—'}</span>
+        <span className="text-sm text-gray-200">Language: {result.language ?? '—'}</span>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
         <div>
-          <div className="font-semibold">Output</div>
-          <pre className="bg-white p-3 border rounded mt-1 whitespace-pre-wrap">{output ?? '—'}</pre>
+          <div className="font-semibold mb-1">Output</div>
+          <pre className="bg-gray-900 p-3 rounded-lg whitespace-pre-wrap border border-gray-700">{output ?? '—'}</pre>
         </div>
         <div>
-          <div className="font-semibold">Expected</div>
-          <pre className="bg-white p-3 border rounded mt-1 whitespace-pre-wrap">{expected ?? '—'}</pre>
+          <div className="font-semibold mb-1">Expected</div>
+          <pre className="bg-gray-900 p-3 rounded-lg whitespace-pre-wrap border border-gray-700">{expected ?? '—'}</pre>
         </div>
       </div>
 
       {stderr && (
-        <div className="mt-3">
-          <div className="font-semibold text-red-600">Errors</div>
-          <pre className="bg-red-100 p-3 border rounded mt-1 whitespace-pre-wrap">{stderr}</pre>
+        <div className="mt-4">
+          <div className="font-semibold text-red-300">Errors</div>
+          <pre className="bg-red-900 p-3 rounded-lg whitespace-pre-wrap border border-red-500">{stderr}</pre>
         </div>
       )}
 
-      {reason && <p className="mt-2 text-red-600"><strong>Reason:</strong> {reason}</p>}
+      {reason && <p className="mt-3 text-red-300"><strong>Reason:</strong> {reason}</p>}
 
-      <div className="mt-3 flex flex-wrap gap-4 text-xs text-gray-600">
+      <div className="mt-4 flex flex-wrap gap-4 text-xs text-gray-300">
         <span><strong>Time Complexity:</strong> {result.time_complexity ?? '—'}</span>
         <span><strong>Space Complexity:</strong> {result.space_complexity ?? '—'}</span>
         {runtime && <span><strong>Runtime:</strong> {runtime}</span>}
