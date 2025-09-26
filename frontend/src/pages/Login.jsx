@@ -19,17 +19,25 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-tr from-purple-200 via-pink-200 to-yellow-200">
-      <form onSubmit={handleSubmit} className="bg-white p-8 rounded-2xl shadow-2xl w-96 max-w-full border border-gray-200">
-        <h2 className="text-3xl font-extrabold mb-6 text-center text-purple-700">Login</h2>
-        {error && <div className="text-red-500 mb-4 text-center font-medium">{error}</div>}
+    <div className="flex items-center justify-center min-h-screen bg-gray-900 p-6">
+      <form 
+        onSubmit={handleSubmit} 
+        className="bg-gradient-to-br from-gray-800 via-gray-900 to-black p-10 rounded-3xl shadow-2xl w-96 max-w-full border border-gray-700"
+      >
+        <h2 className="text-4xl font-extrabold mb-6 text-center text-purple-400 drop-shadow-lg">
+          Login
+        </h2>
+
+        {error && (
+          <div className="text-red-500 mb-4 text-center font-medium">{error}</div>
+        )}
 
         <input
           type="email"
           placeholder="Email"
           value={email}
           onChange={e => setEmail(e.target.value)}
-          className="w-full mb-4 p-3 border rounded-xl border-gray-300 focus:ring-2 focus:ring-purple-400 outline-none transition"
+          className="w-full mb-4 p-3 border border-gray-600 rounded-xl bg-gray-800 text-gray-100 focus:ring-2 focus:ring-purple-500 outline-none transition duration-300"
           required
         />
         <input
@@ -37,12 +45,12 @@ export default function Login() {
           placeholder="Password"
           value={password}
           onChange={e => setPassword(e.target.value)}
-          className="w-full mb-4 p-3 border rounded-xl border-gray-300 focus:ring-2 focus:ring-purple-400 outline-none transition"
+          className="w-full mb-6 p-3 border border-gray-600 rounded-xl bg-gray-800 text-gray-100 focus:ring-2 focus:ring-purple-500 outline-none transition duration-300"
           required
         />
         <button
           type="submit"
-          className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold py-3 rounded-xl hover:from-purple-600 hover:to-pink-600 transition"
+          className="w-full bg-gradient-to-r from-purple-600 to-pink-500 text-white font-bold py-3 rounded-xl shadow-lg hover:from-purple-700 hover:to-pink-600 transform hover:scale-105 transition"
         >
           Login
         </button>
