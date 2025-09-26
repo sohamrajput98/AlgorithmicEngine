@@ -18,8 +18,6 @@ const EditorCard = ({ problemId, language: initialLang = 'python' }) => {
     const trimmedCode = code.trim();
     const parsedId = Number(problemId);
 
-    console.log("🧪 handleSubmit triggered");
-
     if (!trimmedCode) {
       setResult({ status: 'error', reason: '❌ Code is empty' });
       return;
@@ -36,19 +34,14 @@ const EditorCard = ({ problemId, language: initialLang = 'python' }) => {
       language,
     };
 
-    console.log("🚀 Submitting payload:", payload);
-
     setLoading(true);
     try {
       const res = await submitSolution(payload);
-      console.log("✅ Submission response:", res);
       setResult(res);
-
       if (res.status?.toLowerCase().includes('accept')) {
         localStorage.setItem(`accepted_problem_${parsedId}`, 'true');
       }
     } catch (err) {
-      console.error("❌ Submission failed:", err);
       setResult({ status: 'error', reason: err.message || 'Unknown error' });
     } finally {
       setLoading(false);
@@ -61,13 +54,13 @@ const EditorCard = ({ problemId, language: initialLang = 'python' }) => {
   };
 
   return (
-    <div className="p-4 md:p-6 bg-gray-50 rounded-2xl shadow-lg max-w-5xl mx-auto">
+    <div className="p-6 bg-gray-900 rounded-2xl shadow-xl max-w-6xl mx-auto text-gray-100">
       {/* Controls */}
-      <div className="flex flex-wrap gap-3 mb-4 items-center">
+      <div className="flex flex-wrap gap-4 mb-6 items-center">
         <select
           value={language}
           onChange={e => setLanguage(e.target.value)}
-          className="border px-3 py-1 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
+          className="px-4 py-2 rounded-lg bg-gray-800 text-white border border-gray-600 focus:ring-2 focus:ring-blue-500"
         >
           <option value="python">Python</option>
           <option value="cpp">C++</option>
@@ -78,23 +71,23 @@ const EditorCard = ({ problemId, language: initialLang = 'python' }) => {
         <button
           onClick={handleSubmit}
           disabled={loading}
-          className="bg-gradient-to-r from-green-500 to-teal-500 text-white px-5 py-1 rounded-lg shadow hover:from-green-600 hover:to-teal-600 disabled:opacity-50 transition"
+          className="px-5 py-2 bg-gradient-to-r from-green-500 to-teal-500 text-white rounded-lg shadow hover:from-green-600 hover:to-teal-600 disabled:opacity-50 transition font-semibold"
         >
           {loading ? 'Running...' : 'Run Code'}
         </button>
 
         <button
           onClick={handleReset}
-          className="bg-gray-200 px-4 py-1 rounded-lg hover:bg-gray-300 transition"
+          className="px-4 py-2 bg-gradient-to-r from-gray-600 to-gray-700 text-white rounded-lg hover:from-gray-700 hover:to-gray-800 transition font-semibold"
         >
           Reset
         </button>
       </div>
 
       {/* Editor */}
-      <Suspense fallback={<div className="animate-pulse p-6 bg-gray-200 rounded-lg">Loading editor...</div>}>
+      <Suspense fallback={<div className="animate-pulse p-6 bg-gray-800 rounded-lg">Loading editor...</div>}>
         <MonacoEditor
-          height="350px"
+          height="400px"
           language={language}
           value={code}
           onChange={setCode}
@@ -104,6 +97,7 @@ const EditorCard = ({ problemId, language: initialLang = 'python' }) => {
             wordWrap: 'on',
             automaticLayout: true,
             scrollBeyondLastLine: false,
+            theme: 'vs-dark',
           }}
           className="rounded-lg shadow-inner"
         />
@@ -111,7 +105,7 @@ const EditorCard = ({ problemId, language: initialLang = 'python' }) => {
 
       {/* Results */}
       {result && (
-        <div className="mt-5">
+        <div className="mt-6">
           <TestResultsCard result={result} />
         </div>
       )}
