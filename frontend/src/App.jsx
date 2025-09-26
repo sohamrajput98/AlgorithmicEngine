@@ -13,8 +13,8 @@ import PrivateRoute from './components/PrivateRoute';
 import Navbar from './components/Navbar';
 import Submissions from './pages/Submissions';
 import Analytics from "./pages/Analytics";
-import Home from './pages/Home'; // ✅ updated import
-
+import Home from './pages/Home'; 
+import Visualizer from "./pages/Visualizer";
 
 export default function App() {
   return (
@@ -42,6 +42,9 @@ export default function App() {
         } />
         <Route path="/analytics" element={
           <PrivateRoute><Analytics /></PrivateRoute>
+        } />
+        <Route path="/visualizer" element={
+          <PrivateRoute><Visualizer /></PrivateRoute>
         } />
 
         <Route path="*" element={<div className="p-6 text-red-600">404: Page Not Found</div>} />
