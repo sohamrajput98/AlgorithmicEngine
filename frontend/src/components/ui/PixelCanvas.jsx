@@ -60,6 +60,7 @@ class Pixel {
   }
 }
 
+
 // React PixelCanvas component
 export function PixelCanvas({
   gap = 5,
