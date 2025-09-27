@@ -9,6 +9,5 @@ export default function GradientButton({ children, onClick, className = "", type
 >
   {children}
 </button>
-
   );
 }
