@@ -6,3 +6,4 @@ export const aiResponses = {
   "binary-search":
     "Binary Search splits a sorted array by checking the middle element and discarding half every step. Time complexity: O(log n). Requires sorted input.",
 };
+
