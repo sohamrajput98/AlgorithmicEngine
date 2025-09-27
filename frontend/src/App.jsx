@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 import './styles/tailwind.css';
 
@@ -10,16 +10,16 @@ import ProblemList from './pages/ProblemList';
 import ProblemView from './pages/ProblemView';
 import Editor from './pages/Editor';
 import PrivateRoute from './components/PrivateRoute';
-import Navbar from './components/Navbar';
 import Submissions from './pages/Submissions';
-import Analytics from "./pages/Analytics";
-import Home from './pages/Home'; 
-import Visualizer from "./pages/Visualizer";
+import Analytics from './pages/Analytics';
+import Home from './pages/Home';
+import Visualizer from './pages/Visualizer';
+
+import AppLayout from './components/ui/AppLayout'; // ✅ correct path based on your structure
 
 export default function App() {
   return (
-    <>
-      <Navbar /> {/* ✅ persistent navigation bar */}
+    <AppLayout>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
@@ -49,6 +49,6 @@ export default function App() {
 
         <Route path="*" element={<div className="p-6 text-red-600">404: Page Not Found</div>} />
       </Routes>
-    </>
+    </AppLayout>
   );
 }
