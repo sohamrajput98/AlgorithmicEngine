@@ -68,7 +68,6 @@ export default function NavbarHome() {
   )}
 </AnimatePresence>
 
-
           {/* Toggle button */}
           <motion.button
             onClick={() => setOpen((s) => !s)}
