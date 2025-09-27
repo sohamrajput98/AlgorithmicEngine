@@ -34,3 +34,4 @@ export default function StepExplanation({ currentStepIndex = 0, steps = [] }) {
     </div>
   );
 }
+
