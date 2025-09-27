@@ -31,3 +31,4 @@ export default function ArrayBlock({ value, highlight = "", index = 0 }) {
     </div>
   );
 }
+
