@@ -81,6 +81,7 @@ export default function VisualizerWindow() {
     setIsPlaying(false);
   };
 
+  
   const handleAiHint = () => {
     setAiText(aiResponses[selectedAlgo] || "No hint available for this algorithm.");
   };
