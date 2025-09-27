@@ -12,4 +12,5 @@ export default function AppLayout({ children }) {
       {children}
     </div>
   );
+  
 }
