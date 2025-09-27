@@ -18,3 +18,4 @@ export default function NotesPanel({ notes = "", onChange = () => {} }) {
     </div>
   );
 }
+
