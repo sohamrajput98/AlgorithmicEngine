@@ -143,6 +143,5 @@ export const FeatureCard = ({
   </div>
 </div>
 
-
   );
 };
