@@ -1,181 +1,259 @@
-import React, { useEffect, useMemo, useState } from "react";
-import ArrayBlock from "./comman/ArrayBlock";
-import Controls from "./comman/Controls";
-import StepExplanation from "./comman/StepExplanation";
-import NotesPanel from "./comman/NotesPanel";
-import { bubbleSortSteps, twoPointersSteps, binarySearchSteps } from "./utils/algorithm";
-import { aiResponses } from "./utils/aiResponses";
+import React, { useState, Suspense, lazy, useRef } from "react";
+import { useQuery } from "@tanstack/react-query";
 
-const algorithmMap = {
-  "bubble-sort": bubbleSortSteps,
-  "two-pointers": twoPointersSteps,
-  "binary-search": binarySearchSteps,
+import { getAlgorithmSteps } from "./utils/algorithmService";
+import { getAIResponse } from "./utils/aiResponses";
+
+import { ArrayBlock } from "./comman/ArrayBlock";
+import { StepExplanation } from "./comman/StepExplanation";
+import { Controls } from "./comman/Controls";
+import { NotesPanel } from "./comman/NotesPanel";
+import { Charts } from "./comman/Charts";
+
+const AIChatPanel = lazy(() => import("./comman/AIChatPanel"));
+
+const ALGORITHM_TYPES = {
+  Sorting: ["Bubble Sort", "Insertion Sort", "Merge Sort"],
+  Searching: ["Linear Search", "Binary Search"],
+  "Two Pointers": ["Pair Sum", "Slow Fast"],
 };
 
-export default function VisualizerWindow() {
-  const [selectedAlgo, setSelectedAlgo] = useState("bubble-sort");
-  const [rawInput, setRawInput] = useState("");
-  const [baseArray, setBaseArray] = useState([5, 3, 8, 4, 2]);
-  const [steps, setSteps] = useState([]);
-  const [currentStepIdx, setCurrentStepIdx] = useState(0);
+export const VisualizerWindow = () => {
+  // UI state
+  const [algorithmType, setAlgorithmType] = useState("Sorting");
+  const [algorithmName, setAlgorithmName] = useState(ALGORITHM_TYPES["Sorting"][0]);
+  const [baseArray, setBaseArray] = useState([5, 3, 8, 1, 2]);
+  const [array, setArray] = useState([...baseArray]);
+  const [stepIndex, setStepIndex] = useState(0);
+
+  // controls
+  const [speed, setSpeed] = useState(500);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [speedMs, setSpeedMs] = useState(500);
-  const [notesOpen, setNotesOpen] = useState(true);
-  const [notes, setNotes] = useState(() => localStorage.getItem("visualizer.notes") || "");
-  const [aiText, setAiText] = useState("");
-  const [comparisonMode, setComparisonMode] = useState(false);
+  const isPlayingRef = useRef(false);
 
-  // Compute steps whenever algorithm or array changes
-  useEffect(() => {
-    const fn = algorithmMap[selectedAlgo];
-    const parsedArray = Array.isArray(baseArray) ? baseArray.map(v => Number(v)) : [];
-    const computedSteps = fn(parsedArray);
-    setSteps(computedSteps.length ? computedSteps : [parsedArray.map(v => ({ value: v }))]);
-    setCurrentStepIdx(0);
-    setIsPlaying(false);
-  }, [selectedAlgo, baseArray]);
+  // AI & tabs
+  const [aiQuery, setAiQuery] = useState("");
+  const [aiResponse, setAiResponse] = useState("");
+  const [rightTab, setRightTab] = useState("ai"); // "ai" or "notes"
+  const [notesDraggable, setNotesDraggable] = useState(false);
+  const [notesOpen, setNotesOpen] = useState(true); // notes shown in panel by default
 
-  // Play timer
-  useEffect(() => {
-    if (!isPlaying) return;
-    const timer = setInterval(() => {
-      setCurrentStepIdx(prev => {
-        if (prev < steps.length - 1) return prev + 1;
-        clearInterval(timer);
-        return prev;
+  // fetch steps (react-query) - synchronous function allowed
+  const { data: steps = [], isLoading } = useQuery({
+    queryKey: ["algorithmSteps", algorithmName, array],
+    queryFn: () => getAlgorithmSteps(algorithmName, array),
+    retry: false,
+  });
+
+  // ai fetch
+  const fetchAIResponse = async () => {
+    const r = await getAIResponse(aiQuery, algorithmName);
+    setAiResponse(r);
+  };
+
+  if (isLoading) return <div className="p-6 text-gray-400">Loading steps...</div>;
+
+  const currentStep = steps[stepIndex] || {};
+  const activeIndices = currentStep.activeIndices || [];
+
+  // ---------- play/pause logic without useEffect ----------
+  const play = async () => {
+    if (isPlayingRef.current) return;
+    isPlayingRef.current = true;
+    setIsPlaying(true);
+
+    while (isPlayingRef.current && stepIndex < steps.length - 1) {
+      // wait
+      await new Promise((r) => setTimeout(r, speed));
+      // advance
+      setStepIndex((s) => {
+        const next = Math.min(s + 1, steps.length - 1);
+        // update array snapshot each step (so Charts and ArrayBlock reflect)
+        if (steps[next] && Array.isArray(steps[next].array)) setArray([...steps[next].array]);
+        return next;
       });
-    }, speedMs);
-    return () => clearInterval(timer);
-  }, [isPlaying, steps, speedMs]);
-
-  // Handlers
-  const handleApplyInput = () => {
-    if (!rawInput.trim()) return;
-    const arr = rawInput
-      .split(",")
-      .map(s => s.trim())
-      .filter(Boolean)
-      .map(n => {
-        const parsed = Number(n);
-        return Number.isNaN(parsed) ? n : parsed;
-      });
-    setBaseArray(arr);
-  };
-
-  const handleRandomize = (len = 8, max = 50) => {
-    const arr = Array.from({ length: len }, () => Math.floor(Math.random() * max) + 1);
-    setBaseArray(arr);
-    setRawInput(arr.join(","));
-  };
-
-  const handleStepForward = () => {
-    setCurrentStepIdx(s => Math.min(s + 1, steps.length - 1));
-    setIsPlaying(false);
-  };
-  const handleStepBack = () => {
-    setCurrentStepIdx(s => Math.max(s - 1, 0));
-    setIsPlaying(false);
-  };
-  const handleReset = () => {
-    setCurrentStepIdx(0);
+    }
+    isPlayingRef.current = false;
     setIsPlaying(false);
   };
 
-  
-  const handleAiHint = () => {
-    setAiText(aiResponses[selectedAlgo] || "No hint available for this algorithm.");
+  const pause = () => {
+    isPlayingRef.current = false;
+    setIsPlaying(false);
   };
 
-  const currentStep = useMemo(() => {
-    if (!steps || steps.length === 0) return baseArray.map(v => ({ value: v }));
-    return steps[currentStepIdx] || steps[0];
-  }, [steps, currentStepIdx, baseArray]);
+  const reset = () => {
+    pause();
+    setStepIndex(0);
+    setArray([...baseArray]); // reset to base
+  };
 
-  useEffect(() => {
-    localStorage.setItem("visualizer.notes", notes);
-  }, [notes]);
+  const forward = () => {
+    pause();
+    setStepIndex((s) => {
+      const next = Math.min(s + 1, steps.length - 1);
+      if (steps[next] && Array.isArray(steps[next].array)) setArray([...steps[next].array]);
+      return next;
+    });
+  };
+
+  const rewind = () => {
+    pause();
+    setStepIndex((s) => {
+      const prev = Math.max(s - 1, 0);
+      if (steps[prev] && Array.isArray(steps[prev].array)) setArray([...steps[prev].array]);
+      return prev;
+    });
+  };
+
+  // algorithm switching
+  const handleTypeChange = (e) => {
+    const t = e.target.value;
+    setAlgorithmType(t);
+    const first = ALGORITHM_TYPES[t][0];
+    setAlgorithmName(first);
+    setArray([...baseArray]);
+    setStepIndex(0);
+  };
+
+  const handleAlgChange = (e) => {
+    setAlgorithmName(e.target.value);
+    setArray([...baseArray]);
+    setStepIndex(0);
+  };
+
+  // Notes overlay mode toggler (parent controls)
+  const handleMakeNotesDraggable = (shouldBeDraggable) => {
+    setNotesDraggable(Boolean(shouldBeDraggable));
+    // if opening as overlay, hide the embedded version
+    if (shouldBeDraggable) setNotesOpen(false);
+    else setNotesOpen(true);
+  };
+
+  // open notes tab from AI
+  const openNotesTab = () => {
+    setRightTab("notes");
+    setNotesOpen(true);
+  };
 
   return (
-    <div className="min-h-[70vh] w-full p-6">
-      <div className="flex flex-col items-center mb-6">
-        <h1 className="text-3xl md:text-4xl font-extrabold text-white mb-2">Algorithm Visualizer</h1>
-        <p className="text-sm text-gray-300">Single interactive window — select algorithm, feed input, play steps.</p>
+    <div className="flex flex-col md:flex-row gap-6 p-6 max-w-7xl mx-auto">
+      {/* LEFT: visual + controls */}
+      <div className="flex-1 space-y-6">
+        {/* selection */}
+        <div className="flex gap-3 mb-2">
+          <select className="p-2 rounded bg-gray-700 text-white" value={algorithmType} onChange={handleTypeChange}>
+            {Object.keys(ALGORITHM_TYPES).map((t) => <option key={t} value={t}>{t}</option>)}
+          </select>
+
+          <select className="p-2 rounded bg-gray-700 text-white" value={algorithmName} onChange={handleAlgChange}>
+            {ALGORITHM_TYPES[algorithmType].map((a) => <option key={a} value={a}>{a}</option>)}
+          </select>
+        </div>
+
+        {/* info */}
+        <div className="bg-gradient-to-r from-purple-700 to-indigo-800 text-white p-4 rounded-2xl shadow-lg">
+          <h2 className="text-xl font-bold">{algorithmName}</h2>
+          <p className="text-sm mt-1">Time: {currentStep.timeComplexity || "N/A"} | Space: {currentStep.spaceComplexity || "N/A"}</p>
+          <p className="text-xs mt-1">{currentStep.description || "Step-by-step explanation below."}</p>
+        </div>
+
+        {/* array */}
+        <div className="flex flex-wrap gap-3 bg-gray-900 p-4 rounded-2xl shadow-inner">
+          {array.map((v, i) => <ArrayBlock key={i} index={i} value={v} isActive={activeIndices.includes(i)} />)}
+        </div>
+
+        {/* step explanation */}
+        <StepExplanation step={currentStep} index={stepIndex} total={steps.length} />
+
+        {/* controls */}
+        <Controls
+          isPlaying={isPlaying}
+          onPlay={play}
+          onPause={pause}
+          onReset={reset}
+          onForward={forward}
+          onRewind={rewind}
+          speed={speed}
+          setSpeed={setSpeed}
+        />
+
+        {/* charts */}
+        <Suspense fallback={<div className="text-gray-400">Loading chart...</div>}>
+          <Charts data={array} />
+        </Suspense>
       </div>
 
-      {/* Top Controls */}
-      <Controls
-        selectedAlgo={selectedAlgo}
-        setSelectedAlgo={setSelectedAlgo}
-        rawInput={rawInput}
-        setRawInput={setRawInput}
-        onApplyInput={handleApplyInput}
-        onRandomize={handleRandomize}
-        isPlaying={isPlaying}
-        onPlay={() => setIsPlaying(true)}
-        onPause={() => setIsPlaying(false)}
-        onStepForward={handleStepForward}
-        onStepBack={handleStepBack}
-        onReset={handleReset}
-        speedMs={speedMs}
-        setSpeedMs={setSpeedMs}
-        comparisonMode={comparisonMode}
-        setComparisonMode={setComparisonMode}
-        notesOpen={notesOpen}
-        setNotesOpen={setNotesOpen}
-        handleAiHint={handleAiHint}
-      />
+      {/* RIGHT: AI + Notes Tab Card */}
+      <div className="w-full md:w-1/3 flex flex-col gap-3">
+        {/* TAB HEADER */}
+        <div className="flex gap-2 items-center">
+          <button
+            onClick={() => setRightTab("ai")}
+            className={`px-3 py-2 rounded-md ${rightTab === "ai" ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white" : "bg-gray-800 text-gray-200"}`}
+          >
+            AI
+          </button>
+          <button
+            onClick={() => setRightTab("notes")}
+            className={`px-3 py-2 rounded-md ${rightTab === "notes" ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white" : "bg-gray-800 text-gray-200"}`}
+          >
+            Notes
+          </button>
 
-      {/* Main content */}
-      <div className="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-[1fr,320px] gap-6">
-        {/* Visualization panel */}
-        <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-lg p-6 shadow-lg">
-          <div className="h-64 flex items-end justify-center gap-3 transition-all">
-            {currentStep.map((cell, i) => (
-              <ArrayBlock key={i} value={cell.value} highlight={cell.highlight} index={i} />
-            ))}
-          </div>
-
-          <div className="mt-6">
-            <Controls
-              isPlaying={isPlaying}
-              onPlay={() => setIsPlaying(true)}
-              onPause={() => setIsPlaying(false)}
-              onStepForward={handleStepForward}
-              onStepBack={handleStepBack}
-              onReset={handleReset}
-              currentStepIdx={currentStepIdx}
-              totalSteps={steps.length}
-              isInline // separate prop to render smaller inline controls
-            />
-          </div>
-
-          <div className="mt-4 text-sm text-gray-300 flex justify-between">
-            <div>Step: {currentStepIdx + 1} / {Math.max(steps.length, 1)}</div>
-            <div>Algorithm: <span className="font-semibold">{selectedAlgo}</span></div>
+          {/* compact AI trigger (fixed small) */}
+          <div className="ml-auto">
+            <button className="px-2 py-1 bg-gradient-to-r from-green-500 to-teal-400 rounded text-white" onClick={() => setRightTab("ai")}>
+              Open AI
+            </button>
           </div>
         </div>
 
-        {/* Sidebar */}
-        <div className="flex flex-col gap-4">
-          <div className="p-4 bg-gray-800 rounded-lg">
-            <h3 className="text-lg font-semibold text-white">Info</h3>
-            <p className="text-sm text-gray-300 mt-2">
-              {selectedAlgo === "bubble-sort" && "Bubble Sort • Time: O(n²) • Space: O(1)"}
-              {selectedAlgo === "two-pointers" && "Two Pointers • Typical: O(n) • Space: O(1)"}
-              {selectedAlgo === "binary-search" && "Binary Search • Time: O(log n) • Space: O(1)"}
-            </p>
-          </div>
+        {/* CARD BODY */}
+        <div className="bg-gray-800 rounded-2xl p-4 shadow-lg min-h-[200px]">
+          <Suspense fallback={<div className="text-gray-400">Loading AI...</div>}>
+            {rightTab === "ai" && (
+              <AIChatPanel
+                algorithm={algorithmName}
+                query={aiQuery}
+                setQuery={setAiQuery}
+                response={aiResponse}
+                fetchResponse={fetchAIResponse}
+                collapsed={false}
+                onToggleExpand={() => {}}
+                onOpenNotesTab={openNotesTab}
+              />
+            )}
 
-          <StepExplanation currentStepIndex={currentStepIdx} steps={steps} />
+            {rightTab === "notes" && !notesDraggable && notesOpen && (
+              <NotesPanel
+                algorithm={algorithmName}
+                draggable={false}
+                onClose={() => setNotesOpen(false)}
+                onMakeDraggable={handleMakeNotesDraggable}
+              />
+            )}
 
-          {notesOpen && <NotesPanel notes={notes} onChange={setNotes} />}
-
-          <div className="p-4 bg-gray-800 rounded-lg">
-            <h3 className="text-lg font-semibold text-white">AI Hint</h3>
-            <p className="text-sm text-gray-300 mt-2">{aiText || "Click AI Hint to load a quick explanation."}</p>
-          </div>
+            {/* if notes are draggable, we hide the embedded version and show overlay below */}
+            {!notesOpen && notesDraggable && (
+              <div className="text-sm text-gray-400">Notes open as draggable overlay.</div>
+            )}
+          </Suspense>
         </div>
       </div>
+
+      {/* Draggable notes overlay (if enabled) */}
+      {notesDraggable && (
+        <NotesPanel
+          algorithm={algorithmName}
+          draggable={true}
+          onClose={() => {
+            setNotesDraggable(false);
+            setNotesOpen(true);
+          }}
+          onMakeDraggable={handleMakeNotesDraggable}
+        />
+      )}
     </div>
   );
-}
+};
