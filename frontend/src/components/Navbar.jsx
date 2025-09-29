@@ -12,7 +12,7 @@ const Navbar = () => {
       ? [
           { to: "/dashboard", label: "Dashboard" },
           { to: "/problems", label: "Problems" },
-          { to: "/editor/1", label: "Editor" },
+          { to: "/editor", label: "Editor" },
           { to: "/analytics", label: "Analytics" },
           { to: "/submissions", label: "Submissions" },
           { to: "/visualizer", label: "Visualizer" },
