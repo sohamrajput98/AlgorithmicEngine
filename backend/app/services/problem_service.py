@@ -1,11 +1,11 @@
-# backend/app/services/problem_service.py
 import json
 from typing import List, Optional, Tuple
 
-from sqlalchemy import or_, asc, desc
-from app.models.problem import Problem
-from app.schemas.problem import ProblemCreate, ProblemUpdate
+from sqlalchemy import or_, and_, asc, desc
 from app.database import SessionLocal
+from app.models.problem import Problem
+from app.models.submission import Submission
+from app.schemas.problem import ProblemCreate, ProblemUpdate
 
 
 class ProblemService:
@@ -45,35 +45,69 @@ class ProblemService:
         self.db.refresh(db_problem)
         return db_problem
 
-    # --- List with filters, search, sorting, pagination ---
-    def list_problems(
+    # --- 🧠 UPDATED METHOD to get problems with status and advanced filters ---
+    def list_problems_with_status(
         self,
+        user_id: int,
+        status: Optional[str] = None,
         stars: Optional[int] = None,
-        tag: Optional[str] = None,
+        tags: Optional[List[str]] = None,
         search: Optional[str] = None,
         sort_by: Optional[str] = None,
         order: str = "asc",
         page: int = 1,
         limit: int = 10
-    ) -> Tuple[List[Problem], int]:
+    ) -> Tuple[List[Tuple[Problem, str]], int]:
+        # First, get all submissions for the current user to determine status
+        user_submissions = self.db.query(Submission).filter(Submission.user_id == user_id).all()
+        
+        solved_problem_ids = {s.problem_id for s in user_submissions if s.status == 'accepted'}
+        attempted_problem_ids = {s.problem_id for s in user_submissions}
+
+        # Build the main query for problems with database-level filters
         q = self.db.query(Problem)
 
         if stars is not None:
             q = q.filter(Problem.stars == stars)
-        if tag:
-            like_pattern = f'%"{tag}"%'
-            q = q.filter(Problem.tags.like(like_pattern) | Problem.tags.like(f'%{tag}%'))
+        if tags:
+            # Logic to filter by multiple tags: problem must contain ALL specified tags
+            tag_filters = []
+            for tag in tags:
+                like_pattern = f'%"{tag}"%'
+                tag_filters.append(Problem.tags.like(like_pattern))
+            q = q.filter(and_(*tag_filters))
         if search:
             search_pattern = f"%{search}%"
             q = q.filter(or_(Problem.title.like(search_pattern), Problem.statement.like(search_pattern)))
 
         # Sorting
-        if sort_by in ["stars", "title", "difficulty_notes"]:
-            q = q.order_by(asc(getattr(Problem, sort_by)) if order == "asc" else desc(getattr(Problem, sort_by)))
+        if sort_by in ["stars", "title"]:
+            sort_column = getattr(Problem, sort_by)
+            q = q.order_by(asc(sort_column) if order == "asc" else desc(sort_column))
 
-        total = q.count()
-        q = q.offset((page - 1) * limit).limit(limit)
-        return q.all(), total
+        all_filtered_problems = q.all()
+
+        # Combine problems with their status before filtering by status and paginating
+        results_with_status = []
+        for problem in all_filtered_problems:
+            p_status = "Todo"
+            if problem.id in solved_problem_ids:
+                p_status = "Solved"
+            elif problem.id in attempted_problem_ids:
+                p_status = "Attempted"
+            
+            # Perform status filter here in Python after calculating the status
+            if not status or p_status == status:
+                 results_with_status.append((problem, p_status))
+            
+        total = len(results_with_status)
+        
+        # Apply pagination after all filtering is done
+        start = (page - 1) * limit
+        end = start + limit
+        paginated_results = results_with_status[start:end]
+            
+        return paginated_results, total
 
     # --- Get by id ---
     def get_problem(self, problem_id: int) -> Optional[Problem]:
@@ -120,3 +154,14 @@ class ProblemService:
         tag_filters = [Problem.tags.like(f'%"{t}"%') | Problem.tags.like(f'%{t}%') for t in tags]
         q = q.filter(or_(*tag_filters)).limit(limit)
         return q.all()
+    
+    # --- New method to get all unique tags for the filter dropdown ---
+    def get_all_unique_tags(self) -> List[str]:
+        all_problems = self.db.query(Problem.tags).filter(Problem.tags != None).all()
+        tags_set = set()
+        for tags_json, in all_problems:
+            parsed_tags = self._parse_tags(tags_json)
+            if parsed_tags:
+                for tag in parsed_tags:
+                    tags_set.add(tag)
+        return sorted(list(tags_set))
