@@ -1,15 +1,27 @@
 import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { fetchProblemById, fetchSimilarProblems } from "../services/problems";
+import { fetchProblemById, fetchSimilarProblems, fetchProblemTestcases } from "../services/problems";
 import { useState } from "react";
 
 const ProblemView = () => {
   const { id } = useParams();
   const [showSimilar, setShowSimilar] = useState(false);
+  const [testcases, setTestcases] = useState([]);
 
   const { data: problem, isLoading, error } = useQuery({
     queryKey: ["problem", id],
     queryFn: () => fetchProblemById(id),
+    retry: false,
+  });
+
+  // Fetch all testcases including their results
+  useQuery({
+    queryKey: ["problemTestcases", id],
+    queryFn: () => fetchProblemTestcases(id),
+    onSuccess: (data) => {
+      if (Array.isArray(data)) setTestcases(data);
+    },
+    enabled: !!id,
     retry: false,
   });
 
@@ -41,12 +53,9 @@ const ProblemView = () => {
           ))}
         </div>
         <pre className="whitespace-pre-wrap bg-gray-800 text-gray-200 p-4 rounded-lg shadow-inner">{problem.statement}</pre>
-        {problem.difficulty_notes && (
-          <div className="mt-2 text-xs italic text-gray-400">Notes: {problem.difficulty_notes}</div>
-        )}
-        {problem.expected && (
-          <div className="mt-2 text-xs italic text-gray-400">Expected Output: {problem.expected}</div>
-        )}
+        
+
+        
 
         <Link
           to={`/editor/${problem.id}`}
