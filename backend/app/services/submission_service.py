@@ -85,7 +85,8 @@ class SubmissionService:
             memory_limit_kb = getattr(tc, "memory_limit_kb", 65536) or 65536
 
             try:
-                res = self.run_code(s.language, code, input_data, time_limit_ms, memory_limit_kb)
+                runner = RUNNER_MAP.get(s.language.lower())
+                res = runner(code, stdin_data=input_data, time_limit_ms=time_limit_ms, memory_limit_kb=memory_limit_kb)
             except Exception as e:
                 res = {
                     "stdout": "",
@@ -94,6 +95,8 @@ class SubmissionService:
                     "runtime_ms": 0,
                     "status": "error"
                 }
+
+            print("⏱️ runtime_ms from runner:", res.get("runtime_ms", "missing"))
 
             ok = False
             stdout = (res.get("stdout") or "").strip()
@@ -104,22 +107,26 @@ class SubmissionService:
                 ok = True
 
             log_entry = {
+                "case_number": len(logs) + 1,
                 "testcase_id": tc.id,
-                "ok": ok,
-                "stdout": stdout,
-                "stderr": stderr,
+                "input": input_data,
+                "output": stdout,
+                "expected": expected,
+                "status": "Accepted" if ok else "Wrong Answer",
+                "error": stderr if not ok else None,
                 "runtime_ms": res.get("runtime_ms", 0),
             }
-            print("Running test case:", tc.id)
-            print("Code:", repr(code))
-            print("Input:", repr(input_data))
-            print("Expected:", repr(expected))
-            print("Runner result:", res)
             logs.append(log_entry)
+
+            if logs:
+                s.output = logs[0].get("output")
+                s.expected = logs[0].get("expected")
 
             if ok:
                 passes += 1
             total_runtime += res.get("runtime_ms", 0)
+
+        print("⏱️ Final total_runtime:", total_runtime)
 
         s.total = total
         s.passes = passes
