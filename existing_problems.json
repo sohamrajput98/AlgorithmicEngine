@@ -1,0 +1,277 @@
+[
+  {
+    "id": 1,
+    "title": "Print Hello to Console",
+    "statement": "print hello",
+    "expected": "Hello",
+    "stars": 1,
+    "tags": [],
+    "difficulty_notes": null
+  },
+  {
+    "id": 2,
+    "title": "Add Two Numbers",
+    "statement": "Write a function that takes two integers and returns their sum.",
+    "expected": "The output should be the sum of the two input integers.",
+    "stars": 2,
+    "tags": [
+      "math",
+      "easy"
+    ],
+    "difficulty_notes": "Simple arithmetic with a fixed expected result"
+  },
+  {
+    "id": 3,
+    "title": "Check Even Number",
+    "statement": "Write a one-line Python program that prints True if 6 is even",
+    "expected": "True",
+    "stars": 1,
+    "tags": [
+      "logic",
+      "easy"
+    ],
+    "difficulty_notes": "Basic modulo operation"
+  },
+  {
+    "id": 4,
+    "title": "Print Hello",
+    "statement": "Write a program that prints \"Hello\" to console.",
+    "expected": "Hello",
+    "stars": 1,
+    "tags": [
+      "intro",
+      "easy"
+    ],
+    "difficulty_notes": "Basic print statement"
+  },
+  {
+    "id": 5,
+    "title": "Add Two Numbers",
+    "statement": "Given two numbers a and b, print their sum.",
+    "expected": "7",
+    "stars": 1,
+    "tags": [
+      "math",
+      "easy"
+    ],
+    "difficulty_notes": "Simple addition"
+  },
+  {
+    "id": 6,
+    "title": "Check Even Number",
+    "statement": "Check if a given number n is even.",
+    "expected": "True",
+    "stars": 1,
+    "tags": [
+      "logic",
+      "easy"
+    ],
+    "difficulty_notes": "Basic modulo operation"
+  },
+  {
+    "id": 7,
+    "title": "Maximum in Array",
+    "statement": "Find the maximum element in a given integer array.",
+    "expected": "9",
+    "stars": 2,
+    "tags": [
+      "array",
+      "easy"
+    ],
+    "difficulty_notes": "Linear scan"
+  },
+  {
+    "id": 8,
+    "title": "Sum of Array",
+    "statement": "Calculate the sum of all elements in an array.",
+    "expected": "15",
+    "stars": 2,
+    "tags": [
+      "array",
+      "easy",
+      "math"
+    ],
+    "difficulty_notes": "Iterate and sum"
+  },
+  {
+    "id": 9,
+    "title": "Binary Search",
+    "statement": "Implement binary search on a sorted array.",
+    "expected": "Found at index 2",
+    "stars": 3,
+    "tags": [
+      "binary_search",
+      "medium"
+    ],
+    "difficulty_notes": "Divide and conquer"
+  },
+  {
+    "id": 10,
+    "title": "Reverse Linked List",
+    "statement": "Reverse a singly linked list.",
+    "expected": "2->1->0",
+    "stars": 3,
+    "tags": [
+      "linked_list",
+      "medium"
+    ],
+    "difficulty_notes": "Iterative or recursive reversal"
+  },
+  {
+    "id": 11,
+    "title": "Detect Cycle in Linked List",
+    "statement": "Check if a linked list has a cycle.",
+    "expected": "True",
+    "stars": 4,
+    "tags": [
+      "linked_list",
+      "medium"
+    ],
+    "difficulty_notes": "Use fast and slow pointers"
+  },
+  {
+    "id": 12,
+    "title": "Queue Using Stacks",
+    "statement": "Implement a queue using two stacks.",
+    "expected": "Success",
+    "stars": 4,
+    "tags": [
+      "stack",
+      "queue",
+      "medium"
+    ],
+    "difficulty_notes": "Simulate queue operations"
+  },
+  {
+    "id": 13,
+    "title": "Merge Two Sorted Arrays",
+    "statement": "Merge two sorted arrays into one sorted array.",
+    "expected": "[1,2,3,4,5,6]",
+    "stars": 2,
+    "tags": [
+      "array",
+      "easy"
+    ],
+    "difficulty_notes": "Two-pointer approach"
+  },
+  {
+    "id": 14,
+    "title": "Find Prime Numbers",
+    "statement": "Print all prime numbers up to n.",
+    "expected": "2,3,5,7",
+    "stars": 3,
+    "tags": [
+      "math",
+      "medium"
+    ],
+    "difficulty_notes": "Sieve of Eratosthenes recommended"
+  },
+  {
+    "id": 15,
+    "title": "Factorial",
+    "statement": "Compute factorial of a number n.",
+    "expected": "120",
+    "stars": 1,
+    "tags": [
+      "math",
+      "easy"
+    ],
+    "difficulty_notes": "Iterative or recursive"
+  },
+  {
+    "id": 16,
+    "title": "Rotate Array",
+    "statement": "Rotate an array by k positions to the right.",
+    "expected": "[5,1,2,3,4]",
+    "stars": 3,
+    "tags": [
+      "array",
+      "medium"
+    ],
+    "difficulty_notes": "Use reversal algorithm"
+  },
+  {
+    "id": 17,
+    "title": "Longest Increasing Subsequence",
+    "statement": "Find the length of the longest increasing subsequence in an array.",
+    "expected": "4",
+    "stars": 4,
+    "tags": [
+      "dp",
+      "medium"
+    ],
+    "difficulty_notes": "Dynamic programming approach"
+  },
+  {
+    "id": 18,
+    "title": "Balanced Parentheses",
+    "statement": "Check if a string of parentheses is balanced.",
+    "expected": "True",
+    "stars": 2,
+    "tags": [
+      "stack",
+      "easy"
+    ],
+    "difficulty_notes": "Use stack to validate"
+  },
+  {
+    "id": 19,
+    "title": "Two Sum",
+    "statement": "Given an array and target, find indices of two numbers that add up to target.",
+    "expected": "[0,1]",
+    "stars": 3,
+    "tags": [
+      "array",
+      "medium"
+    ],
+    "difficulty_notes": "Use hashmap or brute force"
+  },
+  {
+    "id": 20,
+    "title": "Matrix Spiral Order",
+    "statement": "Print the elements of a matrix in spiral order.",
+    "expected": "[1,2,3,6,9,8,7,4,5]",
+    "stars": 4,
+    "tags": [
+      "matrix",
+      "medium"
+    ],
+    "difficulty_notes": "Traverse in spiral order"
+  },
+  {
+    "id": 21,
+    "title": "Find GCD",
+    "statement": "Compute GCD of two numbers.",
+    "expected": "6",
+    "stars": 2,
+    "tags": [
+      "math",
+      "easy"
+    ],
+    "difficulty_notes": "Euclidean algorithm"
+  },
+  {
+    "id": 22,
+    "title": "Find First Unique Character",
+    "statement": "Return the index of the first non-repeating character in a string.",
+    "expected": "0",
+    "stars": 3,
+    "tags": [
+      "string",
+      "medium"
+    ],
+    "difficulty_notes": "Use hashmap for frequency count"
+  },
+  {
+    "id": 23,
+    "title": "Palindrome Number",
+    "statement": "Check if a number is a palindrome.",
+    "expected": "True",
+    "stars": 1,
+    "tags": [
+      "math",
+      "easy"
+    ],
+    "difficulty_notes": "Compare digits"
+  }
+]
