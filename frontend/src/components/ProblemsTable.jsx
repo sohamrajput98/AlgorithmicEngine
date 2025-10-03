@@ -26,13 +26,13 @@ const StatusBadge = ({ status }) => {
 // --- Main Table Component ---
 export const ProblemsTable = ({ problems, sortConfig, onSort }) => {
   
-  const SortableHeader = ({ columnKey, title, className = '' }) => {
+  const SortableHeader = ({ columnKey, title }) => {
     const isSorted = sortConfig.key === columnKey;
     const Icon = isSorted ? (sortConfig.direction === 'asc' ? FaSortUp : FaSortDown) : FaSort;
     return (
       <th 
         onClick={() => onSort(columnKey)} 
-        className={`p-4 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider cursor-pointer hover:bg-gray-800 transition-colors ${className}`}
+        className="p-4 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider cursor-pointer hover:bg-gray-800 transition-colors"
       >
         <div className="flex items-center gap-2">{title} <Icon className="text-gray-500" /></div>
       </th>
@@ -52,18 +52,19 @@ export const ProblemsTable = ({ problems, sortConfig, onSort }) => {
         </thead>
         <tbody className="bg-gray-900 divide-y divide-gray-700">
           {problems.map((prob) => (
-            <tr key={prob.id} className="hover:bg-gray-800/50 transition-colors duration-200">
+            <tr key={prob.id} className="hover:bg-gray-800/50 transition-colors duration-200 group">
               <td className="p-4 whitespace-nowrap"><StatusBadge status={prob.status} /></td>
               <td className="p-4 whitespace-nowrap max-w-sm truncate">
-                <Link to={`/problems/${prob.id}`} className="font-medium text-white hover:text-purple-400 transition-colors">
+                <Link to={`/problems/${prob.id}`} className="font-medium text-white group-hover:text-purple-400 transition-colors">
                   {prob.title}
                 </Link>
               </td>
               <td className="p-4 whitespace-nowrap">
                 <div className="flex flex-wrap gap-2">
-                  {/* 🧠 UI UPDATE: Added gradient to tags */}
                   {prob.tags?.slice(0, 3).map((tag) => (
-                    <span key={tag} className="px-2.5 py-1 text-xs font-semibold text-indigo-100 bg-gradient-to-r from-purple-900/80 to-indigo-900/80 rounded-full">{tag}</span>
+                    <span key={tag} className="px-2.5 py-1 text-xs font-semibold text-indigo-100 bg-gradient-to-r from-purple-900/80 to-indigo-900/80 rounded-full">
+                      {tag}
+                    </span>
                   ))}
                 </div>
               </td>
