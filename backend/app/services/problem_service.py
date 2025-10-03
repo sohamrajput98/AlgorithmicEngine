@@ -1,3 +1,4 @@
+# File: backend/app/services/problem_service.py
 import json
 from typing import List, Optional, Tuple
 
@@ -45,7 +46,7 @@ class ProblemService:
         self.db.refresh(db_problem)
         return db_problem
 
-    # --- 🧠 UPDATED METHOD to get problems with status and advanced filters ---
+    # --- 🧠 UPDATED METHOD with correct filter logic ---
     def list_problems_with_status(
         self,
         user_id: int,
@@ -58,36 +59,34 @@ class ProblemService:
         page: int = 1,
         limit: int = 10
     ) -> Tuple[List[Tuple[Problem, str]], int]:
-        # First, get all submissions for the current user to determine status
         user_submissions = self.db.query(Submission).filter(Submission.user_id == user_id).all()
         
         solved_problem_ids = {s.problem_id for s in user_submissions if s.status == 'accepted'}
         attempted_problem_ids = {s.problem_id for s in user_submissions}
 
-        # Build the main query for problems with database-level filters
         q = self.db.query(Problem)
 
         if stars is not None:
             q = q.filter(Problem.stars == stars)
+        
+        # 🧠 Correctly handles filtering by a list of tags
         if tags:
-            # Logic to filter by multiple tags: problem must contain ALL specified tags
             tag_filters = []
             for tag in tags:
                 like_pattern = f'%"{tag}"%'
                 tag_filters.append(Problem.tags.like(like_pattern))
             q = q.filter(and_(*tag_filters))
+            
         if search:
             search_pattern = f"%{search}%"
             q = q.filter(or_(Problem.title.like(search_pattern), Problem.statement.like(search_pattern)))
 
-        # Sorting
         if sort_by in ["stars", "title"]:
             sort_column = getattr(Problem, sort_by)
             q = q.order_by(asc(sort_column) if order == "asc" else desc(sort_column))
 
         all_filtered_problems = q.all()
 
-        # Combine problems with their status before filtering by status and paginating
         results_with_status = []
         for problem in all_filtered_problems:
             p_status = "Todo"
@@ -96,13 +95,12 @@ class ProblemService:
             elif problem.id in attempted_problem_ids:
                 p_status = "Attempted"
             
-            # Perform status filter here in Python after calculating the status
+            # 🧠 Correctly filters by status after the status has been calculated
             if not status or p_status == status:
                  results_with_status.append((problem, p_status))
             
         total = len(results_with_status)
         
-        # Apply pagination after all filtering is done
         start = (page - 1) * limit
         end = start + limit
         paginated_results = results_with_status[start:end]
@@ -155,7 +153,7 @@ class ProblemService:
         q = q.filter(or_(*tag_filters)).limit(limit)
         return q.all()
     
-    # --- New method to get all unique tags for the filter dropdown ---
+    # --- Method to get all unique tags for the filter dropdown ---
     def get_all_unique_tags(self) -> List[str]:
         all_problems = self.db.query(Problem.tags).filter(Problem.tags != None).all()
         tags_set = set()
