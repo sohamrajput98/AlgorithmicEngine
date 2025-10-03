@@ -5,30 +5,31 @@ import { ProblemsTable } from "../components/ProblemsTable";
 import api from "../services/api";
 import { LoginPrompt } from "../components/LoginPrompt";
 import { FiSearch, FiX } from "react-icons/fi";
+import { getToken } from "../services/auth";
 
-// Helper hook to fetch all unique tags
 const useTags = () => {
+  const token = getToken();
   return useQuery({
     queryKey: ["tags"],
     queryFn: async () => {
       const res = await api.get("/problems/tags");
       return res.data;
     },
-    staleTime: 1000 * 60 * 5, // Cache tags for 5 minutes
+    staleTime: 1000 * 60 * 5,
+    enabled: !!token,
   });
 };
 
 export default function ProblemList() {
-  // --- STATE for sorting, filtering, and searching ---
   const [sortConfig, setSortConfig] = useState({ key: 'stars', direction: 'asc' });
   const [searchQuery, setSearchQuery] = useState("");
   const [filters, setFilters] = useState({
     status: "",
     stars: "",
-    tag: "" 
+    tags: "" // ✅ updated from 'tag'
   });
 
-  // --- DATA FETCHING ---
+  const token = getToken();
   const { data: tagsData = [] } = useTags();
 
   const { data: problems, isLoading, error } = useQuery({
@@ -39,14 +40,14 @@ export default function ProblemList() {
       search: searchQuery || undefined,
       status: filters.status || undefined,
       stars: filters.stars || undefined,
-      tag: filters.tag || undefined,
+      tags: filters.tags || undefined, // ✅ updated from 'tag'
       limit: 100,
     }),
     retry: false,
     placeholderData: (prevData) => prevData,
+    enabled: !!token,
   });
 
-  // --- HANDLERS ---
   const handleSort = (key) => {
     setSortConfig(prev => ({
       key,
@@ -61,11 +62,11 @@ export default function ProblemList() {
 
   const resetFilters = () => {
     setSearchQuery("");
-    setFilters({ status: "", stars: "", tag: "" });
+    setFilters({ status: "", stars: "", tags: "" }); // ✅ updated from 'tag'
     setSortConfig({ key: 'stars', direction: 'asc' });
   };
 
-  // --- RENDER LOGIC ---
+  if (!token) { return <LoginPrompt />; }
   if (error) {
     if (error.response?.status === 401) return <LoginPrompt />;
     return <div className="text-center py-20 text-red-500">Error: {error.message}</div>;
@@ -73,7 +74,6 @@ export default function ProblemList() {
 
   return (
     <div className="max-w-7xl mx-auto p-4 md:p-8 space-y-6 bg-gray-900 text-white">
-      {/* 🧠 UI UPDATE: Header now uses gradient text */}
       <div className="text-left">
         <h1 className="text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-indigo-400">
           Problemset
@@ -107,11 +107,10 @@ export default function ProblemList() {
             <option value="Attempted">Attempted</option>
             <option value="Solved">Solved</option>
           </select>
-          <select name="tag" value={filters.tag} onChange={handleFilterChange} className="bg-gray-900 text-white rounded-md p-2.5 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500 h-full appearance-none">
+          <select name="tags" value={filters.tags} onChange={handleFilterChange} className="bg-gray-900 text-white rounded-md p-2.5 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500 h-full appearance-none">
             <option value="">All Tags</option>
             {tagsData.map(tag => <option key={tag} value={tag}>{tag}</option>)}
           </select>
-          {/* 🧠 UI UPDATE: Reset button now uses a gradient */}
           <button
             onClick={resetFilters}
             className="px-4 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold rounded-md hover:opacity-90 transition-opacity h-full flex items-center justify-center gap-2"
@@ -126,7 +125,7 @@ export default function ProblemList() {
         sortConfig={sortConfig}
         onSort={handleSort}
       />
-      {isLoading && <p className="text-center text-gray-500 animate-pulse">Fetching problems...</p>}
+      {isLoading && !problems && <p className="text-center text-gray-500 animate-pulse">Loading problems...</p>}
     </div>
   );
 }
