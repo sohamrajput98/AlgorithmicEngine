@@ -1,27 +1,21 @@
-import React, { useState, Suspense, lazy, useEffect } from 'react';
-import { submitSolution } from '../services/problems';
+import React, { useState, Suspense, lazy } from 'react';
+import { submitSolution } from '../services/problems'; // ✅ Your original service
 import TestResultsCard from './TestResultsCard';
+import { FiPlay, FiSend } from 'react-icons/fi';
 
 const MonacoEditor = lazy(() => import('@monaco-editor/react'));
 
-const EditorCard = ({ problemId, language: initialLang = 'python' }) => {
+const EditorCard = ({ problemId, userId }) => {
   const [code, setCode] = useState('');
-  const [language, setLanguage] = useState(initialLang);
+  const [language, setLanguage] = useState('python');
   const [result, setResult] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    console.log("🧩 EditorCard mounted with problemId:", problemId);
-  }, [problemId]);
-
-  const handleSubmit = async () => {
+  const handleSubmit = async (runSampleOnly) => {
     const trimmedCode = code.trim();
     const parsedId = Number(problemId);
 
-    if (!trimmedCode) {
-      setResult({ status: 'error', reason: '❌ Code is empty' });
-      return;
-    }
+    if (!trimmedCode || isLoading) return;
 
     if (!parsedId || isNaN(parsedId)) {
       setResult({ status: 'error', reason: '❌ Invalid problemId' });
@@ -32,19 +26,31 @@ const EditorCard = ({ problemId, language: initialLang = 'python' }) => {
       problem_id: parsedId,
       code: trimmedCode,
       language,
+      run_sample_only: runSampleOnly, // ✅ Gemini’s flag
     };
 
-    setLoading(true);
+    setIsLoading(true);
+    setResult(null);
+
     try {
       const res = await submitSolution(payload);
       setResult(res);
+
+      // ✅ GPT’s badge tracking logic
       if (res.status?.toLowerCase().includes('accept')) {
         localStorage.setItem(`accepted_problem_${parsedId}`, 'true');
       }
     } catch (err) {
-      setResult({ status: 'error', reason: err.message || 'Unknown error' });
+      setResult({
+        status: 'error',
+        result_log: JSON.stringify([{
+          case_number: 1,
+          status: 'Client Error',
+          error: err.message || 'An unknown error occurred.',
+        }]),
+      });
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -54,13 +60,13 @@ const EditorCard = ({ problemId, language: initialLang = 'python' }) => {
   };
 
   return (
-    <div className="p-6 bg-gray-900 rounded-2xl shadow-xl max-w-6xl mx-auto text-gray-100">
+    <div className="p-6 bg-gray-900 rounded-2xl shadow-xl text-gray-100 border border-gray-700">
       {/* Controls */}
-      <div className="flex flex-wrap gap-4 mb-6 items-center">
+      <div className="flex flex-wrap gap-4 mb-4 items-center">
         <select
           value={language}
           onChange={e => setLanguage(e.target.value)}
-          className="px-4 py-2 rounded-lg bg-gray-800 text-white border border-gray-600 focus:ring-2 focus:ring-blue-500"
+          className="px-4 py-2 rounded-lg bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500"
         >
           <option value="python">Python</option>
           <option value="cpp">C++</option>
@@ -69,44 +75,48 @@ const EditorCard = ({ problemId, language: initialLang = 'python' }) => {
         </select>
 
         <button
-          onClick={handleSubmit}
-          disabled={loading}
-          className="px-5 py-2 bg-gradient-to-r from-green-500 to-teal-500 text-white rounded-lg shadow hover:from-green-600 hover:to-teal-600 disabled:opacity-50 transition font-semibold"
-        >
-          {loading ? 'Running...' : 'Run Code'}
-        </button>
-
-        <button
           onClick={handleReset}
-          className="px-4 py-2 bg-gradient-to-r from-gray-600 to-gray-700 text-white rounded-lg hover:from-gray-700 hover:to-gray-800 transition font-semibold"
+          className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition font-semibold"
         >
           Reset
+        </button>
+
+        <div className="flex-grow"></div>
+
+        <button
+          onClick={() => handleSubmit(true)}
+          disabled={isLoading}
+          className="px-5 py-2 bg-gray-700 text-white rounded-lg shadow hover:bg-gray-600 disabled:opacity-50 transition font-semibold flex items-center gap-2"
+        >
+          <FiPlay /> {isLoading ? 'Running...' : 'Run Code'}
+        </button>
+        <button
+          onClick={() => handleSubmit(false)}
+          disabled={isLoading}
+          className="px-5 py-2 bg-gradient-to-r from-green-600 to-teal-600 text-white rounded-lg shadow hover:opacity-90 disabled:opacity-50 transition font-semibold flex items-center gap-2"
+        >
+          <FiSend /> {isLoading ? 'Submitting...' : 'Submit'}
         </button>
       </div>
 
       {/* Editor */}
-      <Suspense fallback={<div className="animate-pulse p-6 bg-gray-800 rounded-lg">Loading editor...</div>}>
-        <MonacoEditor
-          height="400px"
-          language={language}
-          value={code}
-          onChange={setCode}
-          options={{
-            minimap: { enabled: false },
-            fontSize: 14,
-            wordWrap: 'on',
-            automaticLayout: true,
-            scrollBeyondLastLine: false,
-            theme: 'vs-dark',
-          }}
-          className="rounded-lg shadow-inner"
-        />
-      </Suspense>
+      <div className="rounded-lg overflow-hidden border border-gray-700">
+        <Suspense fallback={<div className="h-[400px] animate-pulse bg-gray-800"></div>}>
+          <MonacoEditor
+            height="400px"
+            language={language}
+            value={code}
+            onChange={setCode}
+            theme="vs-dark"
+            options={{ minimap: { enabled: false }, fontSize: 14, wordWrap: 'on' }}
+          />
+        </Suspense>
+      </div>
 
       {/* Results */}
-      {result && (
+      {(isLoading || result) && (
         <div className="mt-6">
-          <TestResultsCard result={result} />
+          <TestResultsCard result={result} isLoading={isLoading && !result} />
         </div>
       )}
     </div>
