@@ -1,4 +1,3 @@
-// src/components/visualization/Charts.jsx
 import React from "react";
 import {
   ResponsiveContainer,
@@ -94,24 +93,5 @@ export function PieChart({ data = [] }) {
 export function CategoryBarChart({ data = [] }) {
   const hasData = Array.isArray(data) && data.length > 0;
 
-  return (
-    <div className="bg-gray-800 rounded-xl p-6 shadow-lg mt-6">
-      <h2 className="text-lg font-semibold mb-4 text-white">Step Analysis</h2>
-      {!hasData ? (
-        <div className="text-gray-400">No category data available.</div>
-      ) : (
-        <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#444" />
-            <XAxis dataKey="category" stroke="#aaa" />
-            <YAxis stroke="#aaa" />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey="attempted" fill="#60a5fa" />
-            <Bar dataKey="solved" fill="#34d399" />
-          </BarChart>
-        </ResponsiveContainer>
-      )}
-    </div>
-  );
+  
 }
