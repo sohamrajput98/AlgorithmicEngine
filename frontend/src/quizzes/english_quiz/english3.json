@@ -1,0 +1,12 @@
+[
+  {"question":"Choose the synonym of 'Angry'.","options":["Calm","Mad","Happy","Tired"],"answer":1},
+  {"question":"Choose the antonym of 'Hot'.","options":["Warm","Cold","Boiling","Heat"],"answer":1},
+  {"question":"Fill in the blank: He ____ to the market yesterday.","options":["go","went","gone","going"],"answer":1},
+  {"question":"Select the correct spelling.","options":["Accomodate","Accommodate","Acommodate","Accomadate"],"answer":1},
+  {"question":"Identify the noun: 'Birds fly in the sky.'","options":["Birds","fly","sky","All"],"answer":0},
+  {"question":"Identify the verb: 'She dances beautifully.'","options":["She","dances","beautifully","None"],"answer":1},
+  {"question":"Choose the correct article: I saw ____ owl.","options":["a","an","the","No article"],"answer":1},
+  {"question":"Correct the sentence: 'He don't like tea.'","options":["He doesn't like tea.","He not like tea.","He doesn't likes tea.","He no like tea."],"answer":0},
+  {"question":"Select the adjective: 'The red car.'","options":["The","red","car","None"],"answer":1},
+  {"question":"Choose the correct tense: 'I ____ my homework now.'","options":["do","did","am doing","done"],"answer":2}
+]

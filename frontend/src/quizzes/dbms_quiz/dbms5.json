@@ -1,0 +1,12 @@
+[
+  {"question":"Which command removes all rows but keeps table structure?","options":["DROP","DELETE","TRUNCATE","REMOVE"],"answer":2},
+  {"question":"HAVING clause is used with:","options":["WHERE","GROUP BY","ORDER BY","INSERT"],"answer":1},
+  {"question":"UNION operation does:","options":["Combines results removing duplicates","Combines keeping duplicates","Joins tables","Creates backup"],"answer":0},
+  {"question":"UNION ALL does:","options":["Removes duplicates","Keeps duplicates","Joins tables","Deletes records"],"answer":1},
+  {"question":"Which is not a constraint in SQL?","options":["PRIMARY KEY","FOREIGN KEY","UNIQUE","SORT"],"answer":3},
+  {"question":"Data warehouse is:","options":["Transaction DB","Decision support DB","Flat file","Index table"],"answer":1},
+  {"question":"OLTP stands for:","options":["Online Transaction Processing","Offline Transaction Processing","Operational Table Processing","Online Table Processing"],"answer":0},
+  {"question":"OLAP stands for:","options":["Online Analytical Processing","Offline Analytical Processing","Online Application Processing","Operational Analytical Processing"],"answer":0},
+  {"question":"Surrogate key is:","options":["Artificial key","Primary key","Foreign key","Candidate key"],"answer":0},
+  {"question":"Bitmap index is efficient for:","options":["Low cardinality columns","High cardinality","All columns","Text only"],"answer":0}
+]

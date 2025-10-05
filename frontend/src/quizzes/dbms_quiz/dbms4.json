@@ -1,0 +1,12 @@
+[
+  {"question":"Which of these is a database model?","options":["Relational","Hierarchical","Network","All of these"],"answer":3},
+  {"question":"SQL is:","options":["Procedural language","Non-procedural language","Markup language","Assembly language"],"answer":1},
+  {"question":"Trigger is:","options":["Stored procedure executed on events","Index","Transaction","Constraint"],"answer":0},
+  {"question":"Cursor is used to:","options":["Navigate through query results","Define table","Create index","Backup database"],"answer":0},
+  {"question":"ACID stands for:","options":["Atomicity, Consistency, Isolation, Durability","Automatic, Consistent, Indexed, Durable","Atomicity, Control, Isolation, Delete","Access, Control, Integrity, Database"],"answer":0},
+  {"question":"Deadlock occurs in:","options":["Single transaction","Multiple transactions waiting for each other","Database backup","Indexing"],"answer":1},
+  {"question":"Rollback in DBMS:","options":["Commits transaction","Undoes transaction","Creates index","Deletes table"],"answer":1},
+  {"question":"Commit in DBMS:","options":["Undoes transaction","Saves transaction permanently","Creates backup","Deletes record"],"answer":1},
+  {"question":"Clustered index sorts:","options":["Data physically","Data logically","Doesn’t sort","Database only"],"answer":0},
+  {"question":"Non-clustered index sorts:","options":["Data logically","Data physically","Doesn’t sort","Table only"],"answer":0}
+]

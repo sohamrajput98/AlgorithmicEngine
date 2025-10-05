@@ -1,0 +1,12 @@
+[
+  {"question":"Which layer ensures flow control?","options":["Transport","Network","Data Link","Physical"],"answer":0},
+  {"question":"Which layer handles segmentation?","options":["Transport","Network","Data Link","Application"],"answer":0},
+  {"question":"TCP three-way handshake involves:","options":["SYN, SYN-ACK, ACK","Request, Response, ACK","Ping, Pong, ACK","Hello, World, ACK"],"answer":0},
+  {"question":"Which protocol is used for network management?","options":["SNMP","HTTP","FTP","SMTP"],"answer":0},
+  {"question":"ARP resolves:","options":["IP to MAC","MAC to IP","Domain to IP","Port to IP"],"answer":0},
+  {"question":"DNS uses which port?","options":["53","80","25","443"],"answer":0},
+  {"question":"Which is a transport layer protocol?","options":["TCP","IP","ARP","ICMP"],"answer":0},
+  {"question":"Which layer provides logical addressing?","options":["Network","Data Link","Transport","Physical"],"answer":0},
+  {"question":"SSL/TLS works at:","options":["Presentation/Application","Transport","Network","Data Link"],"answer":0},
+  {"question":"Which layer converts bits to signals?","options":["Physical","Data Link","Network","Transport"],"answer":0}
+]

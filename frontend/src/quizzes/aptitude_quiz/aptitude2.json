@@ -1,0 +1,12 @@
+[
+  {"question":"2x - 7 = 3, x = ?","options":["5","2","3","7"],"answer":1},
+  {"question":"Simplify: 15 ÷ 3 × 2","options":["5","10","15","8"],"answer":1},
+  {"question":"Average of 7, 14, 21","options":["14","13","12","15"],"answer":0},
+  {"question":"Speed of car 120 km in 2 hours = ?","options":["50 km/h","60 km/h","70 km/h","80 km/h"],"answer":1},
+  {"question":"3/4 of 32 = ?","options":["24","20","25","28"],"answer":0},
+  {"question":"25% of 400 = ?","options":["80","100","120","90"],"answer":1},
+  {"question":"If x - y = 4, y = 6, x = ?","options":["8","10","9","7"],"answer":0},
+  {"question":"9² + 12² = ?","options":["225","200","189","210"],"answer":0},
+  {"question":"LCM of 9 and 12 = ?","options":["36","72","48","24"],"answer":0},
+  {"question":"HCF of 20 and 30 = ?","options":["10","5","15","20"],"answer":0}
+]

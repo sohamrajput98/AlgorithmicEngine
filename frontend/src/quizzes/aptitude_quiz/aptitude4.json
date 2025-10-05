@@ -1,0 +1,12 @@
+[
+  {"question":"4x - 8 = 12, x = ?","options":["4","5","6","7"],"answer":2},
+  {"question":"Simplify: 20 ÷ 5 × 3","options":["12","15","10","20"],"answer":1},
+  {"question":"Average of 3, 6, 9","options":["6","7","5","8"],"answer":0},
+  {"question":"Speed of train 150 km in 3 hours = ?","options":["50 km/h","55 km/h","60 km/h","45 km/h"],"answer":0},
+  {"question":"2/3 of 90 = ?","options":["60","50","55","65"],"answer":0},
+  {"question":"30% of 300 = ?","options":["80","90","100","70"],"answer":2},
+  {"question":"If x - y = 5, y = 8, x = ?","options":["12","13","14","10"],"answer":3},
+  {"question":"6² + 8² = ?","options":["100","90","110","120"],"answer":0},
+  {"question":"LCM of 8 and 12 = ?","options":["24","36","48","12"],"answer":0},
+  {"question":"HCF of 14 and 21 = ?","options":["7","14","21","3"],"answer":0}
+]

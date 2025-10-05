@@ -1,0 +1,12 @@
+[
+  {"question":"Which layer provides end-to-end delivery?","options":["Transport","Network","Data Link","Physical"],"answer":0},
+  {"question":"TCP segment contains:","options":["Source & destination port","IP address","MAC address","Domain name"],"answer":0},
+  {"question":"UDP header is smaller than TCP header:","options":["True","False"],"answer":0},
+  {"question":"Which protocol assigns IP addresses automatically?","options":["DHCP","DNS","HTTP","FTP"],"answer":0},
+  {"question":"Which topology has single central node?","options":["Star","Ring","Bus","Mesh"],"answer":0},
+  {"question":"Which topology forms a closed loop?","options":["Ring","Star","Bus","Mesh"],"answer":0},
+  {"question":"Switch works on which addressing?","options":["MAC","IP","Port","Domain"],"answer":0},
+  {"question":"Router works on which addressing?","options":["IP","MAC","Port","Domain"],"answer":0},
+  {"question":"Which protocol is connectionless?","options":["UDP","TCP","HTTP","FTP"],"answer":0},
+  {"question":"Which layer ensures reliable delivery?","options":["Transport","Network","Data Link","Physical"],"answer":0}
+]

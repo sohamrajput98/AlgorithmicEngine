@@ -1,0 +1,12 @@
+[
+  {"question":"If 5x + 3 = 18, then x = ?","options":["3","4","5","6"],"answer":0},
+  {"question":"Simplify: 12 ÷ 4 × 3","options":["9","6","12","3"],"answer":0},
+  {"question":"Find the average of 5, 10, 15","options":["10","11","12","15"],"answer":0},
+  {"question":"If a train runs 60 km in 1.5 hours, speed = ?","options":["40 km/h","45 km/h","50 km/h","60 km/h"],"answer":0},
+  {"question":"2/5 of 50 = ?","options":["20","25","30","15"],"answer":0},
+  {"question":"What is 15% of 200?","options":["25","30","35","40"],"answer":1},
+  {"question":"If x + y = 10, y = 3, then x = ?","options":["5","7","8","6"],"answer":1},
+  {"question":"5² + 12² = ?","options":["169","144","121","125"],"answer":0},
+  {"question":"LCM of 6 and 8 = ?","options":["12","24","48","18"],"answer":1},
+  {"question":"HCF of 12 and 18 = ?","options":["4","6","3","12"],"answer":1}
+]

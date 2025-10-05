@@ -1,0 +1,12 @@
+[
+  {"question":"Which OS allows multiple users simultaneously?","options":["Batch OS","Time-sharing OS","Real-time OS","Single-user OS"],"answer":1},
+  {"question":"Real-time OS is used in:","options":["Embedded systems","Desktop PCs","Batch processing","None"],"answer":0},
+  {"question":"Which is a page replacement policy?","options":["FIFO","SJF","RR","FCFS"],"answer":0},
+  {"question":"External fragmentation occurs in:","options":["Paging","Segmentation","Cache","Registers"],"answer":1},
+  {"question":"Internal fragmentation occurs in:","options":["Fixed partition","Paging","Disk blocks","CPU registers"],"answer":0},
+  {"question":"Thrashing decreases:","options":["CPU utilization","Disk space","Memory size","Process count"],"answer":0},
+  {"question":"Round Robin uses:","options":["Time quantum","Priority","Disk allocation","Stack pointer"],"answer":0},
+  {"question":"Zombie process is:","options":["Terminated process but still in process table","Running process","Ready process","Blocked process"],"answer":0},
+  {"question":"Orphan process is:","options":["Parent terminated, child running","Child terminated, parent running","Both terminated","None"],"answer":0},
+  {"question":"Which command kills a process in Linux?","options":["kill","rm","exit","ps"],"answer":0}
+]

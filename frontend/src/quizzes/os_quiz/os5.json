@@ -1,0 +1,12 @@
+[
+  {"question":"Which scheduling minimizes average waiting time?","options":["FCFS","SJF","Round Robin","Priority"],"answer":1},
+  {"question":"Critical section problem is solved by:","options":["Semaphores","Paging","Disk scheduling","CPU registers"],"answer":0},
+  {"question":"Dining Philosophers problem is for:","options":["Deadlock","Memory allocation","Scheduling","Disk I/O"],"answer":0},
+  {"question":"Banker’s Algorithm prevents:","options":["Deadlock","CPU overload","Memory leakage","Fragmentation"],"answer":0},
+  {"question":"Which is non-preemptive?","options":["SJF non-preemptive","Round Robin","Priority preemptive","Multilevel feedback"],"answer":0},
+  {"question":"Which OS service provides error detection?","options":["I/O","Security","Monitoring","Scheduling"],"answer":2},
+  {"question":"Which scheduling favors short processes?","options":["SJF","FCFS","Round Robin","Multilevel"],"answer":0},
+  {"question":"Disk scheduling aims to:","options":["Reduce seek time","Increase fragmentation","Increase process time","Allocate memory"],"answer":0},
+  {"question":"Which algorithm handles page replacement optimally?","options":["Optimal","FIFO","LRU","LFU"],"answer":0},
+  {"question":"Which memory is fastest?","options":["Cache","RAM","Hard disk","Tape"],"answer":0}
+]

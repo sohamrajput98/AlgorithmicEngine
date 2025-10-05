@@ -1,0 +1,12 @@
+[
+  {"question":"3x + 5 = 20, x = ?","options":["5","3","4","6"],"answer":2},
+  {"question":"Simplify: 8 ÷ 2 × 4","options":["12","16","8","20"],"answer":1},
+  {"question":"Average of 10, 20, 30","options":["20","25","15","18"],"answer":0},
+  {"question":"Speed of bike 90 km in 1.5 hours = ?","options":["60 km/h","50 km/h","55 km/h","45 km/h"],"answer":0},
+  {"question":"1/5 of 50 = ?","options":["5","10","15","20"],"answer":1},
+  {"question":"10% of 150 = ?","options":["10","15","20","25"],"answer":1},
+  {"question":"If x + y = 12, y = 7, x = ?","options":["5","6","4","3"],"answer":0},
+  {"question":"7² + 24² = ?","options":["625","576","600","550"],"answer":0},
+  {"question":"LCM of 10 and 15 = ?","options":["30","25","50","20"],"answer":0},
+  {"question":"HCF of 18 and 24 = ?","options":["6","12","8","4"],"answer":0}
+]

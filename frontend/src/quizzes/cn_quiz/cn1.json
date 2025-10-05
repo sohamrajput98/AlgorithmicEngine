@@ -1,0 +1,12 @@
+[
+  {"question":"Which layer is responsible for routing?","options":["Network","Transport","Data Link","Application"],"answer":0},
+  {"question":"IP stands for:","options":["Internet Protocol","Internal Process","Interface Program","Instruction Pointer"],"answer":0},
+  {"question":"TCP is:","options":["Connection-oriented","Connectionless","Routing protocol","IP address"],"answer":0},
+  {"question":"UDP is:","options":["Connectionless","Connection-oriented","Reliable","Error-free"],"answer":0},
+  {"question":"MAC address is used in:","options":["Data Link layer","Network layer","Transport layer","Application layer"],"answer":0},
+  {"question":"OSI model has how many layers?","options":["7","5","4","6"],"answer":0},
+  {"question":"HTTP works at which layer?","options":["Application","Transport","Network","Data Link"],"answer":0},
+  {"question":"DNS is used to:","options":["Translate domain names to IP","Route packets","Control flow","Encrypt data"],"answer":0},
+  {"question":"Ping uses which protocol?","options":["ICMP","TCP","UDP","IP"],"answer":0},
+  {"question":"Subnet mask is used for:","options":["Dividing network into subnets","Routing packets","Encryption","Error detection"],"answer":0}
+]

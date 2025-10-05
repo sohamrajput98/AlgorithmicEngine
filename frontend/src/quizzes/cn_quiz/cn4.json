@@ -1,0 +1,12 @@
+[
+  {"question":"Ping tests:","options":["Network connectivity","File transfer","Routing tables","Encryption"],"answer":0},
+  {"question":"Traceroute shows:","options":["Route taken by packets","DNS resolution","MAC addresses","IP allocation"],"answer":0},
+  {"question":"OSI layer for framing:","options":["Data Link","Network","Transport","Physical"],"answer":0},
+  {"question":"Which protocol detects errors?","options":["ICMP","TCP","UDP","HTTP"],"answer":0},
+  {"question":"Which is not a network layer protocol?","options":["HTTP","IP","ICMP","ARP"],"answer":0},
+  {"question":"Which IP class has default subnet mask 255.0.0.0?","options":["Class A","Class B","Class C","Class D"],"answer":0},
+  {"question":"IPv6 uses which notation?","options":["Hexadecimal","Decimal","Octal","Binary"],"answer":0},
+  {"question":"Switch vs Hub:","options":["Switch is smarter, forwards selectively","Hub forwards all signals","Both","None"],"answer":0},
+  {"question":"Gateway works at:","options":["Multiple layers","Physical only","Network only","Application only"],"answer":0},
+  {"question":"Protocol for secure web?","options":["HTTPS","HTTP","FTP","SMTP"],"answer":0}
+]

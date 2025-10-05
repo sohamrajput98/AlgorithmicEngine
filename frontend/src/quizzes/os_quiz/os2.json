@@ -1,0 +1,12 @@
+[
+  {"question":"Paging is used to:","options":["Divide memory into fixed size blocks","Divide CPU time","Allocate disks","Handle processes"],"answer":0},
+  {"question":"Page fault occurs when:","options":["Page is in memory","Page is not in memory","CPU idle","Disk full"],"answer":1},
+  {"question":"Which scheduling is preemptive?","options":["FCFS","SJF non-preemptive","Round Robin","Batch"],"answer":2},
+  {"question":"Which file system type is used in Linux?","options":["NTFS","FAT32","ext4","HFS"],"answer":2},
+  {"question":"Semaphore is used for:","options":["Deadlock","Mutual exclusion","Memory allocation","Scheduling"],"answer":1},
+  {"question":"Which of these is not a CPU scheduling criteria?","options":["Throughput","Turnaround time","Waiting time","Page size"],"answer":3},
+  {"question":"Context switching involves:","options":["Saving and loading process state","Memory allocation","Disk I/O","Thread creation"],"answer":0},
+  {"question":"Swap space is used for:","options":["Virtual memory","Permanent storage","CPU registers","Cache"],"answer":0},
+  {"question":"Which is a type of OS security attack?","options":["Viruses","Phishing","Deadlock","All of these"],"answer":3},
+  {"question":"File descriptor is:","options":["Integer handle for files","File name","Memory block","CPU register"],"answer":0}
+]

@@ -1,0 +1,12 @@
+[
+  {"question":"Choose the synonym of 'Fast'.","options":["Quick","Slow","Late","Lazy"],"answer":0},
+  {"question":"Choose the antonym of 'Easy'.","options":["Hard","Simple","Light","Smooth"],"answer":0},
+  {"question":"Fill in the blank: She ____ singing.","options":["is","are","am","was"],"answer":0},
+  {"question":"Select the correct spelling.","options":["Definately","Definitely","Definetely","Definetly"],"answer":1},
+  {"question":"Identify the noun: 'The dog barks.'","options":["dog","barks","The","All"],"answer":0},
+  {"question":"Identify the verb: 'He runs fast.'","options":["He","runs","fast","None"],"answer":1},
+  {"question":"Choose the correct article: I saw ____ eagle.","options":["a","an","the","No article"],"answer":1},
+  {"question":"Correct the sentence: 'She don't like coffee.'","options":["She doesn't like coffee.","She not like coffee.","She doesn't likes coffee.","She no like coffee."],"answer":0},
+  {"question":"Select the adjective: 'The tall tree.'","options":["The","tall","tree","None"],"answer":1},
+  {"question":"Choose the correct tense: 'I ____ reading now.'","options":["am","is","are","was"],"answer":0}
+]

@@ -1,0 +1,12 @@
+[
+  {"question":"DDL stands for:","options":["Data Definition Language","Data Description Language","Data Direct Language","Database Design Language"],"answer":0},
+  {"question":"DML stands for:","options":["Data Manipulation Language","Database Management Language","Data Modification Language","Data Maintenance Language"],"answer":0},
+  {"question":"Which SQL command is DDL?","options":["INSERT","UPDATE","CREATE","DELETE"],"answer":2},
+  {"question":"Which SQL command is DML?","options":["CREATE","INSERT","DROP","ALTER"],"answer":1},
+  {"question":"JOIN operation is part of:","options":["DDL","DML","DCL","TCL"],"answer":1},
+  {"question":"GRANT command is used to:","options":["Define table","Give permissions","Remove table","Query data"],"answer":1},
+  {"question":"REVOKE command is used to:","options":["Remove permissions","Add columns","Create index","Insert data"],"answer":0},
+  {"question":"Normalization helps in:","options":["Reducing redundancy","Increasing redundancy","Slowing queries","None"],"answer":0},
+  {"question":"Denormalization is:","options":["Adding redundancy for speed","Removing redundancy","Creating indexes","Splitting tables"],"answer":0},
+  {"question":"A weak entity depends on:","options":["Primary key","Strong entity","Candidate key","Index"],"answer":1}
+]

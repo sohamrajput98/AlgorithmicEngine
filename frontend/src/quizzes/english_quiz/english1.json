@@ -1,0 +1,12 @@
+[
+  {"question":"Choose the correct synonym of 'Happy'.","options":["Sad","Joyful","Angry","Tired"],"answer":1},
+  {"question":"Choose the correct antonym of 'Increase'.","options":["Rise","Expand","Decrease","Grow"],"answer":2},
+  {"question":"Fill in the blank: She ____ to school every day.","options":["go","goes","gone","going"],"answer":1},
+  {"question":"Select the correct spelling.","options":["Recieve","Receive","Recive","Receeve"],"answer":1},
+  {"question":"Identify the noun: 'He runs fast.'","options":["He","runs","fast","None"],"answer":0},
+  {"question":"Identify the verb: 'The cat sleeps.'","options":["cat","sleeps","The","None"],"answer":1},
+  {"question":"Choose the correct article: I saw ____ elephant.","options":["a","an","the","No article"],"answer":1},
+  {"question":"Correct the sentence: 'She don't like ice cream.'","options":["She doesn't like ice cream.","She not like ice cream.","She doesn't likes ice cream.","She no like ice cream."],"answer":0},
+  {"question":"Select the adjective: 'The tall building.'","options":["The","tall","building","None"],"answer":1},
+  {"question":"Choose the correct tense: 'I ____ my homework yesterday.'","options":["do","did","done","doing"],"answer":1}
+]

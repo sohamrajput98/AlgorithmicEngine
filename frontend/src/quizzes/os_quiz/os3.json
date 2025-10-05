@@ -1,0 +1,12 @@
+[
+  {"question":"Thrashing occurs when:","options":["Too many processes in memory","CPU idle","Disk full","No processes"],"answer":0},
+  {"question":"Which page replacement algorithm replaces the oldest page?","options":["FIFO","LRU","OPTIMAL","LFU"],"answer":0},
+  {"question":"LRU stands for:","options":["Least Recently Used","Last Recently Used","Longest Remaining Usage","Logical Resource Unit"],"answer":0},
+  {"question":"Mutex is:","options":["Mutual exclusion object","Memory unit","CPU register","I/O device"],"answer":0},
+  {"question":"Which memory allocation is contiguous?","options":["Paging","Segmentation","Fixed partition","Virtual memory"],"answer":2},
+  {"question":"Which command shows running processes in Linux?","options":["ps","ls","pwd","cat"],"answer":0},
+  {"question":"Which is non-preemptive scheduling?","options":["FCFS","Round Robin","SJF preemptive","Priority preemptive"],"answer":0},
+  {"question":"Multilevel queue scheduling is:","options":["Fixed queues based on process type","Random","Single queue","Disk allocation"],"answer":0},
+  {"question":"Which OS structure provides modularity?","options":["Monolithic","Layered","Microkernel","All of these"],"answer":1},
+  {"question":"Swapping involves:","options":["Moving processes in/out of memory","Context switch","File deletion","Disk formatting"],"answer":0}
+]

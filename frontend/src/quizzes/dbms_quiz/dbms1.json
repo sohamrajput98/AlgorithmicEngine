@@ -1,0 +1,12 @@
+[
+  {"question":"What does DBMS stand for?","options":["Data Backup Management System","Database Management System","Data Base Manipulation Software","Data Binary Management System"],"answer":1},
+  {"question":"Which of the following is not a function of a DBMS?","options":["Data storage management","Query processing","User interface design","Transaction management"],"answer":2},
+  {"question":"What is the main objective of normalization?","options":["Increase data redundancy","Reduce update anomalies","Speed up insert operations","Avoid using indexes"],"answer":1},
+  {"question":"If a relation has a transitive dependency, which normal form is violated?","options":["1NF","2NF","3NF","BCNF"],"answer":2},
+  {"question":"A candidate key is:","options":["Always the primary key","Every super key","A minimal key that uniquely identifies tuples","A foreign key"],"answer":2},
+  {"question":"Which SQL statement removes a table (structure + data)?","options":["DELETE TABLE","ERASE","DROP TABLE","TRUNCATE TABLE"],"answer":2},
+  {"question":"To add a column to an existing table, which SQL is used?","options":["INSERT","UPDATE","ALTER TABLE … ADD","MODIFY TABLE"],"answer":2},
+  {"question":"What is a VIEW in SQL?","options":["Physical table","Virtual table based on underlying tables","Backup copy of table","Index"],"answer":1},
+  {"question":"What does the ACID property Durability ensure?","options":["Transaction is atomic","System remains in a consistent state","Once committed, the transaction’s changes persist even on crash","Transactions are isolated"],"answer":2},
+  {"question":"Which concurrency control technique uses timestamps?","options":["Locking","Two-phase locking","Timestamp ordering","Multiversion"],"answer":2}
+]

@@ -1,0 +1,12 @@
+[
+  {"question":"5x + 10 = 35, x = ?","options":["3","4","5","6"],"answer":1},
+  {"question":"Simplify: 18 ÷ 3 × 2","options":["10","12","8","14"],"answer":1},
+  {"question":"Average of 5, 15, 25","options":["15","16","17","18"],"answer":0},
+  {"question":"Speed of bus 80 km in 2 hours = ?","options":["35 km/h","40 km/h","45 km/h","50 km/h"],"answer":1},
+  {"question":"3/8 of 64 = ?","options":["24","22","20","25"],"answer":0},
+  {"question":"40% of 50 = ?","options":["15","20","25","30"],"answer":2},
+  {"question":"If x + y = 15, y = 6, x = ?","options":["8","9","10","11"],"answer":1},
+  {"question":"12² + 5² = ?","options":["169","150","160","175"],"answer":0},
+  {"question":"LCM of 6 and 9 = ?","options":["18","12","15","24"],"answer":0},
+  {"question":"HCF of 16 and 24 = ?","options":["8","4","12","6"],"answer":0}
+]

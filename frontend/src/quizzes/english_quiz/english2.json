@@ -1,0 +1,12 @@
+[
+  {"question":"Choose the correct synonym of 'Big'.","options":["Large","Small","Tiny","Short"],"answer":0},
+  {"question":"Choose the antonym of 'Fast'.","options":["Quick","Rapid","Slow","Speedy"],"answer":2},
+  {"question":"Fill in the blank: They ____ playing football.","options":["is","are","am","was"],"answer":1},
+  {"question":"Select the correct spelling.","options":["Occurence","Occurrence","Ocurrence","Ocurence"],"answer":1},
+  {"question":"Identify the pronoun: 'She loves music.'","options":["She","loves","music","None"],"answer":0},
+  {"question":"Identify the adverb: 'He ran quickly.'","options":["He","ran","quickly","None"],"answer":2},
+  {"question":"Choose the correct article: I bought ____ apple.","options":["a","an","the","No article"],"answer":1},
+  {"question":"Correct the sentence: 'They was happy.'","options":["They were happy.","They are happy.","They is happy.","They been happy."],"answer":0},
+  {"question":"Select the adjective: 'A beautiful flower.'","options":["A","beautiful","flower","None"],"answer":1},
+  {"question":"Choose the correct tense: 'She ____ dinner now.'","options":["eat","eats","is eating","ate"],"answer":2}
+]

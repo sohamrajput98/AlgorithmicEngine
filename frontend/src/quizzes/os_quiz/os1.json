@@ -1,0 +1,12 @@
+[
+  {"question":"What is the main function of an OS?","options":["Manage hardware and software resources","Compile programs","Store data permanently","Execute only user programs"],"answer":0},
+  {"question":"Which of these is not an OS?","options":["Windows","Linux","Oracle","MacOS"],"answer":2},
+  {"question":"What is a process?","options":["Program in execution","Program stored in disk","Memory block","CPU register"],"answer":0},
+  {"question":"Which scheduler selects a process from the ready queue?","options":["Long-term","Medium-term","Short-term","Batch"],"answer":2},
+  {"question":"What is a thread?","options":["Lightweight process","Heavyweight process","Disk operation","Memory block"],"answer":0},
+  {"question":"Deadlock occurs when:","options":["Resources are sufficient","Multiple processes wait indefinitely for resources","CPU is idle","Memory is free"],"answer":1},
+  {"question":"Which algorithm is used to prevent deadlock?","options":["FCFS","Banker’s Algorithm","Round Robin","SJF"],"answer":1},
+  {"question":"Virtual memory allows:","options":["Program larger than physical memory to run","CPU speed increase","Faster I/O","Avoid deadlock"],"answer":0},
+  {"question":"Which is not a type of OS?","options":["Batch","Time-sharing","Multitasking","SQL"],"answer":3},
+  {"question":"Which of these is a system call?","options":["open()","printf()","scanf()","exit()"],"answer":0}
+]

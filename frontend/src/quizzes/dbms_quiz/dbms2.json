@@ -1,0 +1,12 @@
+[
+  {"question":"Which SQL clause is used to filter records?","options":["WHERE","HAVING","FROM","SELECT"],"answer":0},
+  {"question":"Primary key constraint ensures:","options":["Uniqueness and not null","Uniqueness only","Not null only","Foreign key relationship"],"answer":0},
+  {"question":"Foreign key is used for:","options":["Data redundancy","Referential integrity","Indexing","Partitioning"],"answer":1},
+  {"question":"Which is not a type of join in SQL?","options":["INNER JOIN","OUTER JOIN","MIDDLE JOIN","CROSS JOIN"],"answer":2},
+  {"question":"In ER diagram, a diamond represents:","options":["Entity","Attribute","Relationship","Weak entity"],"answer":2},
+  {"question":"Tuple refers to:","options":["Column in table","Row in table","Table itself","Database"],"answer":1},
+  {"question":"Superkey is:","options":["A key that can uniquely identify tuples","Primary key","Foreign key","Candidate key"],"answer":0},
+  {"question":"Transaction in DBMS is:","options":["Single operation","Sequence of operations forming logical unit","Stored procedure","Query"],"answer":1},
+  {"question":"Index in DBMS is used for:","options":["Speeding up search","Reducing storage","Transaction management","Security"],"answer":0},
+  {"question":"Which type of relationship allows multiple entities on both sides?","options":["One-to-One","One-to-Many","Many-to-One","Many-to-Many"],"answer":3}
+]

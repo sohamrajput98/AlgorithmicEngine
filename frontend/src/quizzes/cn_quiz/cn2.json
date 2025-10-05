@@ -1,0 +1,12 @@
+[
+  {"question":"Which device connects two networks?","options":["Router","Switch","Hub","Repeater"],"answer":0},
+  {"question":"Which device works at Data Link layer?","options":["Switch","Router","Hub","Repeater"],"answer":0},
+  {"question":"IPV4 address length is:","options":["32 bits","64 bits","128 bits","16 bits"],"answer":0},
+  {"question":"IPV6 address length is:","options":["128 bits","32 bits","64 bits","16 bits"],"answer":0},
+  {"question":"Which protocol ensures reliable data transfer?","options":["TCP","UDP","ICMP","IP"],"answer":0},
+  {"question":"CSMA/CD is used in:","options":["Ethernet","Wi-Fi","IP","TCP"],"answer":0},
+  {"question":"Which protocol is for email?","options":["SMTP","HTTP","FTP","ICMP"],"answer":0},
+  {"question":"FTP is used for:","options":["File transfer","Routing","Error detection","Encryption"],"answer":0},
+  {"question":"Which layer handles encryption?","options":["Presentation","Network","Transport","Physical"],"answer":0},
+  {"question":"Which protocol converts domain to IP?","options":["DNS","DHCP","HTTP","TCP"],"answer":0}
+]

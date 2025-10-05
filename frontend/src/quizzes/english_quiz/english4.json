@@ -1,0 +1,12 @@
+[
+  {"question":"Choose the synonym of 'Smart'.","options":["Intelligent","Stupid","Lazy","Slow"],"answer":0},
+  {"question":"Choose the antonym of 'Light'.","options":["Heavy","Bright","Dark","Soft"],"answer":0},
+  {"question":"Fill in the blank: They ____ happy.","options":["is","are","am","was"],"answer":1},
+  {"question":"Select the correct spelling.","options":["Seperate","Separate","Seperete","Separete"],"answer":1},
+  {"question":"Identify the pronoun: 'He is reading a book.'","options":["He","reading","book","None"],"answer":0},
+  {"question":"Identify the adverb: 'She sings beautifully.'","options":["She","sings","beautifully","None"],"answer":2},
+  {"question":"Choose the correct article: I saw ____ eagle.","options":["a","an","the","No article"],"answer":1},
+  {"question":"Correct the sentence: 'They doesn't play.'","options":["They don't play.","They not play.","They doesn't plays.","They no play."],"answer":0},
+  {"question":"Select the adjective: 'A large house.'","options":["A","large","house","None"],"answer":1},
+  {"question":"Choose the correct tense: 'He ____ lunch now.'","options":["eat","eats","is eating","ate"],"answer":2}
+]
