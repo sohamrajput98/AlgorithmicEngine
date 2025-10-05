@@ -14,8 +14,9 @@ import Submissions from './pages/Submissions';
 import Analytics from './pages/Analytics';
 import Home from './pages/Home';
 import Visualizer from './pages/Visualizer';
+import QuizSelection from './pages/QuizSelection'; // ✅ add this
 
-import AppLayout from './components/ui/AppLayout'; // ✅ correct path based on your structure
+import AppLayout from './components/ui/AppLayout';
 
 export default function App() {
   return (
@@ -45,6 +46,10 @@ export default function App() {
         } />
         <Route path="/visualizer" element={
           <PrivateRoute><Visualizer /></PrivateRoute>
+        } />
+
+        <Route path="/quizzes" element={
+          <PrivateRoute><QuizSelection /></PrivateRoute> // ✅ new route
         } />
 
         <Route path="*" element={<div className="p-6 text-red-600">404: Page Not Found</div>} />
