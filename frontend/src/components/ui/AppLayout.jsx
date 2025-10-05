@@ -1,16 +1,16 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import Navbar from "../Navbar"; // ✅ correct relative path to Navbar.jsx
+import Navbar from "../Navbar";
+import NavbarHome from "./NavbarHome";
 
 export default function AppLayout({ children }) {
   const { pathname } = useLocation();
-  const showNavbar = pathname !== "/"; // hide navbar on Home
+  const isHomePage = pathname === "/";
 
   return (
-    <div className="relative w-full min-h-screen bg-gray-900 text-gray-100">
-      {showNavbar && <Navbar />}
-      {children}
+    <div className="min-h-screen bg-[#0F172A] text-white">
+      {isHomePage ? <NavbarHome /> : <Navbar />}
+      <main className=" px-4 sm:px-6">{children}</main>
     </div>
   );
-  
 }
