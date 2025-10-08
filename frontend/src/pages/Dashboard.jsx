@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
     BarChart, CheckCircle, XCircle, LogOut, User, Activity, Award, ArrowRight, 
-    Calendar, Code, Star, Shield, Clock 
+    Calendar, Code, Star, Shield, Clock, Fingerprint
 } from 'lucide-react';
 import api from "../services/api";
 import { getToken, logout } from "../services/auth";
@@ -140,23 +140,60 @@ const OverviewTabContent = ({ user, analytics, navigate }) => {
     return (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Left Column */}
-            <div className="lg:col-span-1 flex flex-col gap-6">
-                <motion.div className={`${cardBaseStyle} flex-grow`} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }}>
-                    <div className="flex items-center gap-4 mb-6">
-                        <img src={avatarUrl} alt="Avatar" className="w-16 h-16 rounded-full border-2 border-purple-500" />
-                        <div>
-                            <h3 className="text-xl font-bold text-white">{user?.display_name}</h3>
-                            <p className="text-sm text-slate-400">{user?.email}</p>
-                        </div>
-                    </div>
-                    <div className="space-y-3 text-sm flex-grow">
-                        <div className="flex justify-between items-center"><span className="text-slate-400 flex items-center gap-2"><User size={14}/> Role</span> <span className="font-semibold text-white px-2 py-0.5 bg-slate-700 rounded">{user?.role}</span></div>
-                        <div className="flex justify-between items-center"><span className="text-slate-400 flex items-center gap-2"><Shield size={14}/> Status</span> <span className={`font-semibold ${user?.is_active ? "text-green-400" : "text-red-400"}`}>{user?.is_active ? "Active" : "Inactive"}</span></div>
-                    </div>
-                    <button onClick={() => { logout(); navigate("/login"); }} className="mt-6 flex items-center justify-center gap-2 w-full bg-slate-700/50 text-slate-300 px-4 py-2 rounded-lg hover:bg-red-500/20 hover:text-red-400 transition-colors duration-300">
-                        <LogOut size={16} /> Logout
-                    </button>
-                </motion.div>
+<div className="lg:col-span-1 flex flex-col gap-6">
+  <motion.div
+    className={`${cardBaseStyle} flex-grow`}
+    initial={{ opacity: 0, x: -20 }}
+    animate={{ opacity: 1, x: 0 }}
+    transition={{ delay: 0.1 }}
+  >
+    <div className="flex items-center gap-4 mb-6">
+      <img src={avatarUrl} alt="Avatar" className="w-16 h-16 rounded-full border-2 border-purple-500" />
+      <div>
+        <h3 className="text-xl font-bold text-white">{user?.display_name}</h3>
+        <p className="text-sm text-slate-400">{user?.email}</p>
+      </div>
+    </div>
+
+    <div className="space-y-3 text-sm flex-grow">
+      <div className="flex justify-between items-center">
+        <span className="text-slate-400 flex items-center gap-2">
+          <User size={14} /> Role
+        </span>
+        <span className="font-semibold text-white px-2 py-0.5 bg-slate-700 rounded">
+          {user?.role}
+        </span>
+      </div>
+
+        <div className="flex justify-between items-center">
+        <span className="text-slate-400 flex items-center gap-2">
+          <Fingerprint size={14} /> ID
+        </span>
+        <span className="font-medium text-slate-300">{user?.id || "N/A"}</span>
+      </div>
+    </div>
+    
+      <div className="flex justify-between items-center">
+        <span className="text-slate-400 flex items-center gap-2">
+          <Shield size={14} /> Status
+        </span>
+        <span className={`font-semibold ${user?.is_active ? "text-green-400" : "text-red-400"}`}>
+          {user?.is_active ? "Active" : "Inactive"}
+        </span>
+      </div>
+
+
+    <button
+      onClick={() => {
+        logout();
+        navigate("/login");
+      }}
+      className="mt-6 flex items-center justify-center gap-2 w-full bg-slate-700/50 text-slate-300 px-4 py-2 rounded-lg hover:bg-red-500/20 hover:text-red-400 transition-colors duration-300"
+    >
+      <LogOut size={16} /> Logout
+    </button>
+  </motion.div>
+
 
                 <motion.div className={cardBaseStyle} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }}>
                     <h3 className="font-semibold text-lg text-white mb-4">Recent Submissions</h3>
