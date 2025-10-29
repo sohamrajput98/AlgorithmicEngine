@@ -274,7 +274,7 @@ Create a .env file in the backend directory:
 </div>
 <br>
 
-📸 Screenshots
+
 <h2 align="center" style="color: #7C3AED; font-size: 2.2em; margin-bottom: 25px;">📸 Screenshots</h2>
 
 <p align="center" style="color:#bbb;">Explore the visual walkthrough of <b>AlgoEngine</b> — from interactive dashboards to intelligent algorithm visualizations.</p>
@@ -283,55 +283,55 @@ Create a .env file in the backend directory:
 <!-- 🏠 Home Page -->
 <h3 align="center">🏠 Home Page</h3>
 <p align="center">
-  <img src="frontend/public/assets/1.jpeg" alt="Home Page" width="95%" style="border-radius: 10px; box-shadow: 0 4px 15px rgba(124,58,237,0.3);" />
+  <img src="frontend/public/assests/1.png" alt="Home Page" width="95%" style="border-radius: 10px; box-shadow: 0 4px 15px rgba(124,58,237,0.3);" />
 </p>
-
+<br>
 <!-- 📊 Dashboard -->
 <h3 align="center">📊 Dashboard</h3>
 <p align="center">
-  <img src="frontend/public/assets/2.jpeg" alt="Dashboard" width="95%" style="border-radius: 10px; box-shadow: 0 4px 15px rgba(124,58,237,0.3);" />
+  <img src="frontend/public/assests/2.png" alt="Dashboard" width="95%" style="border-radius: 10px; box-shadow: 0 4px 15px rgba(124,58,237,0.3);" />
 </p>
-
+<br>
 <!-- ⚙️ Dashboard Actions -->
 <h3 align="center">⚙️ Dashboard Actions</h3>
 <p align="center">
-  <img src="frontend/public/assets/3.jpeg" alt="Dashboard Actions" width="95%" style="border-radius: 10px; box-shadow: 0 4px 15px rgba(124,58,237,0.3);" />
+  <img src="frontend/public/assests/3.png" alt="Dashboard Actions" width="95%" style="border-radius: 10px; box-shadow: 0 4px 15px rgba(124,58,237,0.3);" />
 </p>
-
+<br>
 <!-- 🔍 Problemset -->
 <h3 align="center">🔍 Problemset for Searching Problems</h3>
 <p align="center">
-  <img src="frontend/public/assets/4.jpeg" alt="Problemset" width="95%" style="border-radius: 10px; box-shadow: 0 4px 15px rgba(124,58,237,0.3);" />
+  <img src="frontend/public/assests/4.png" alt="Problemset" width="95%" style="border-radius: 10px; box-shadow: 0 4px 15px rgba(124,58,237,0.3);" />
 </p>
-
+<br>
 <!-- 💻 Solving with Mono Editor -->
 <h3 align="center">💻 Solving with Mono Editor</h3>
 <p align="center">
-  <img src="frontend/public/assets/5.jpeg" alt="Mono Editor" width="95%" style="border-radius: 10px; box-shadow: 0 4px 15px rgba(124,58,237,0.3);" />
+  <img src="frontend/public/assests/5.jpeg" alt="Mono Editor" width="95%" style="border-radius: 10px; box-shadow: 0 4px 15px rgba(124,58,237,0.3);" />
 </p>
-
+<br>
 <!-- 📬 Submissions Page -->
 <h3 align="center">📬 Submissions Page</h3>
 <p align="center">
-  <img src="frontend/public/assets/6.jpeg" alt="Submissions Page" width="95%" style="border-radius: 10px; box-shadow: 0 4px 15px rgba(124,58,237,0.3);" />
+  <img src="frontend/public/assests/6.jpeg" alt="Submissions Page" width="95%" style="border-radius: 10px; box-shadow: 0 4px 15px rgba(124,58,237,0.3);" />
 </p>
-
+<br>
 <!-- 🧠 Core Subjects Quizzes -->
 <h3 align="center">🧠 Core Subjects Quizzes</h3>
 <p align="center">
-  <img src="frontend/public/assets/7.jpeg" alt="Core Subjects Quizzes" width="95%" style="border-radius: 10px; box-shadow: 0 4px 15px rgba(124,58,237,0.3);" />
+  <img src="frontend/public/assests/7.png" alt="Core Subjects Quizzes" width="95%" style="border-radius: 10px; box-shadow: 0 4px 15px rgba(124,58,237,0.3);" />
 </p>
-
+<br>
 <!-- 📈 Analytics Dashboard -->
 <h3 align="center">📈 Analytics Dashboard</h3>
 <p align="center">
-  <img src="frontend/public/assets/8.jpeg" alt="Analytics Dashboard" width="95%" style="border-radius: 10px; box-shadow: 0 4px 15px rgba(124,58,237,0.3);" />
+  <img src="frontend/public/assests/8.jpeg" alt="Analytics Dashboard" width="95%" style="border-radius: 10px; box-shadow: 0 4px 15px rgba(124,58,237,0.3);" />
 </p>
-
+<br>
 <!-- 🧩 DSA & Algorithm Visualizer -->
 <h3 align="center">🧩 DSA & Algorithm Visualizer</h3>
 <p align="center">
-  <img src="frontend/public/assets/9.jpeg" alt="Algorithm Visualizer" width="95%" style="border-radius: 10px; box-shadow: 0 4px 15px rgba(124,58,237,0.3);" />
+  <img src="frontend/public/assests/9.jpeg" alt="Algorithm Visualizer" width="95%" style="border-radius: 10px; box-shadow: 0 4px 15px rgba(124,58,237,0.3);" />
 </p>
 
 
@@ -488,4 +488,4 @@ Create a .env file in the backend directory:
 🙏 Acknowledgments
 <table width="100%" cellspacing="0" cellpadding="15"> <tr> <td width="33%" align="center" valign="top"> <h4>✨ Built With</h4> <p>Modern web technologies and best practices</p> </td> <td width="33%" align="center" valign="top"> <h4>💡 Inspired By</h4> <p>The passionate developer community</p> </td> <td width="33%" align="center" valign="top"> <h4>❤️ Made For</h4> <p>Learners and educators worldwide</p> </td> </tr> </table>
 
-<p align="center"> <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=12,14,16,18,20&height=150&section=footer&text=Made%20with%20💜%20by%20Soham%20Rajput&fontSize=30&fontColor=FFFFFF&animation=fadeIn" alt="Footer" width="100%"/> </p> <p align="center"> <strong><a href="#">⬆ Back to Top</a></strong> </p>
+<p align="center"> <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=12,14,16,18,20&height=150&section=footer&text=Made%20with%20💜%20by%20Soham%20Rajput&fontSize=30&fontColor=FFFFFF&animation=fadeIn" alt="Footer" width="100%"/> </p>
