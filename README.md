@@ -305,9 +305,9 @@ Create a .env file in the backend directory:
 </p>
 <br>
 <!-- 💻 Solving with Mono Editor -->
-<h3 align="center">💻 Solving with Mono Editor</h3>
+<h3 align="center">💻 Solving with Monaco Editor</h3>
 <p align="center">
-  <img src="frontend/public/assests/5.jpeg" alt="Mono Editor" width="95%" style="border-radius: 10px; box-shadow: 0 4px 15px rgba(124,58,237,0.3);" />
+  <img src="frontend/public/assests/5.jpeg" alt="Monaco Editor" width="95%" style="border-radius: 10px; box-shadow: 0 4px 15px rgba(124,58,237,0.3);" />
 </p>
 <br>
 <!-- 📬 Submissions Page -->
