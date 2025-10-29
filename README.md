@@ -275,19 +275,65 @@ Create a .env file in the backend directory:
 <br>
 
 📸 Screenshots
-Note: These are placeholder images. Remember to replace https://via.placeholder.com/... with URLs to your actual application screenshots!
+<h2 align="center" style="color: #7C3AED; font-size: 2.2em; margin-bottom: 25px;">📸 Screenshots</h2>
 
-📊 Analytics Dashboard
-<p align="center"> <img src="https://via.placeholder.com/900x500/7c3aed/ffffff?text=Advanced+Analytics+Dashboard" alt="Dashboard" width="95%" style="border-radius: 8px; box-shadow: 0 4px 15px rgba(139,92,246,0.3);"/> </p>
+<p align="center" style="color:#bbb;">Explore the visual walkthrough of <b>AlgoEngine</b> — from interactive dashboards to intelligent algorithm visualizations.</p>
+<br>
 
-💻 Interactive Code Editor
-<p align="center"> <img src="https://via.placeholder.com/900x500/8b5cf6/ffffff?text=Real-Time+Code+Editor+Environment" alt="Editor" width="95%" style="border-radius: 8px; box-shadow: 0 4px 15px rgba(139,92,246,0.3);"/> </p>
+<!-- 🏠 Home Page -->
+<h3 align="center">🏠 Home Page</h3>
+<p align="center">
+  <img src="frontend/public/assets/1.jpeg" alt="Home Page" width="95%" style="border-radius: 10px; box-shadow: 0 4px 15px rgba(124,58,237,0.3);" />
+</p>
 
-🎨 Algorithm Visualization Engine
-<p align="center"> <img src="https://via.placeholder.com/900x500/a855f7/ffffff?text=Live+Algorithm+Animations" alt="Visualizer" width="95%" style="border-radius: 8px; box-shadow: 0 4px 15px rgba(139,92,246,0.3);"/> </p>
+<!-- 📊 Dashboard -->
+<h3 align="center">📊 Dashboard</h3>
+<p align="center">
+  <img src="frontend/public/assets/2.jpeg" alt="Dashboard" width="95%" style="border-radius: 10px; box-shadow: 0 4px 15px rgba(124,58,237,0.3);" />
+</p>
 
-📈 Progress Tracking System
-<p align="center"> <img src="https://via.placeholder.com/900x500/c084fc/ffffff?text=Detailed+Progress+Metrics" alt="Progress" width="95%" style="border-radius: 8px; box-shadow: 0 4px 15px rgba(139,92,246,0.3);"/> </p>
+<!-- ⚙️ Dashboard Actions -->
+<h3 align="center">⚙️ Dashboard Actions</h3>
+<p align="center">
+  <img src="frontend/public/assets/3.jpeg" alt="Dashboard Actions" width="95%" style="border-radius: 10px; box-shadow: 0 4px 15px rgba(124,58,237,0.3);" />
+</p>
+
+<!-- 🔍 Problemset -->
+<h3 align="center">🔍 Problemset for Searching Problems</h3>
+<p align="center">
+  <img src="frontend/public/assets/4.jpeg" alt="Problemset" width="95%" style="border-radius: 10px; box-shadow: 0 4px 15px rgba(124,58,237,0.3);" />
+</p>
+
+<!-- 💻 Solving with Mono Editor -->
+<h3 align="center">💻 Solving with Mono Editor</h3>
+<p align="center">
+  <img src="frontend/public/assets/5.jpeg" alt="Mono Editor" width="95%" style="border-radius: 10px; box-shadow: 0 4px 15px rgba(124,58,237,0.3);" />
+</p>
+
+<!-- 📬 Submissions Page -->
+<h3 align="center">📬 Submissions Page</h3>
+<p align="center">
+  <img src="frontend/public/assets/6.jpeg" alt="Submissions Page" width="95%" style="border-radius: 10px; box-shadow: 0 4px 15px rgba(124,58,237,0.3);" />
+</p>
+
+<!-- 🧠 Core Subjects Quizzes -->
+<h3 align="center">🧠 Core Subjects Quizzes</h3>
+<p align="center">
+  <img src="frontend/public/assets/7.jpeg" alt="Core Subjects Quizzes" width="95%" style="border-radius: 10px; box-shadow: 0 4px 15px rgba(124,58,237,0.3);" />
+</p>
+
+<!-- 📈 Analytics Dashboard -->
+<h3 align="center">📈 Analytics Dashboard</h3>
+<p align="center">
+  <img src="frontend/public/assets/8.jpeg" alt="Analytics Dashboard" width="95%" style="border-radius: 10px; box-shadow: 0 4px 15px rgba(124,58,237,0.3);" />
+</p>
+
+<!-- 🧩 DSA & Algorithm Visualizer -->
+<h3 align="center">🧩 DSA & Algorithm Visualizer</h3>
+<p align="center">
+  <img src="frontend/public/assets/9.jpeg" alt="Algorithm Visualizer" width="95%" style="border-radius: 10px; box-shadow: 0 4px 15px rgba(124,58,237,0.3);" />
+</p>
+
 
 <br>
 <div align="center">
