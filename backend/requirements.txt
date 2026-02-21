@@ -6,3 +6,4 @@ pytest==8.4.2
 python-dotenv==1.1.1
 python_bcrypt==0.3.2
 SQLAlchemy==2.0.43
+uvicorn==0.30.6
