@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
 from fastapi.staticfiles import StaticFiles
 from .config import settings
+from .config import FRONTEND_URL
 import os
 
 # Import routers from endpoints
@@ -28,7 +29,7 @@ app = FastAPI(
 # CORS middleware (keep dev server open)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5175"],  # Vite dev server
+    allow_origins=[FRONTEND_URL],  # uses env variable
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
