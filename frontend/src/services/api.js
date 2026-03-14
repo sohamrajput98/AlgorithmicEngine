@@ -2,10 +2,8 @@ import axios from 'axios';
 import { getToken } from './auth'; // 1. Import your getToken function
 
 const api = axios.create({
-  baseURL: "https://algorithmicengine.onrender.com", // your backend URL
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  baseURL: import.meta.env.VITE_API_URL,
+  headers: { 'Content-Type': 'application/json' },
 });
 
 // 2. Add the request interceptor
