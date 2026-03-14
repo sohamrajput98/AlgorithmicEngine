@@ -5,6 +5,7 @@ const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
   headers: { 'Content-Type': 'application/json' },
 });
+console.log(import.meta.env.VITE_API_URL + '/auth/register');
 
 // 2. Add the request interceptor
 api.interceptors.request.use(
