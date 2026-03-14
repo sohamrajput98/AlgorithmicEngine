@@ -11,13 +11,8 @@ APP_ENV = os.getenv("APP_ENV", "development")
 if APP_ENV == "test":
     db_url = os.getenv("TEST_DATABASE_URL")
 else:
-    MYSQL_USER = os.getenv("MYSQLUSER")
-    MYSQL_PASSWORD = os.getenv("MYSQLPASSWORD")
-    MYSQL_HOST = os.getenv("MYSQLHOST")
-    MYSQL_PORT = os.getenv("MYSQLPORT")
-    MYSQL_DB = os.getenv("MYSQLDATABASE")
-    db_url = f"mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DB}"
-
+    db_url = os.getenv("DATABASE_URL")
+    
 logging.info(f"Connecting to DB: {db_url} (env: {APP_ENV})")
 print("DATABASE_URL RAW:", db_url)
 # Create SQLAlchemy engine and session
