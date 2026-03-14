@@ -59,3 +59,6 @@ if APP_ENV in ["test", "production"]:
 async def root():
     if APP_ENV == "development":
         return {"message": "Welcome to AlgorithmicEngine API"}
+    
+for route in app.routes:
+    print(route.path, route.methods)

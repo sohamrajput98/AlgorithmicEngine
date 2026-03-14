@@ -12,7 +12,7 @@ from app import models, schemas
 import bcrypt
 from app.schemas.user import LoginResponse 
 
-router = APIRouter(prefix="/auth", tags=["auth"])
+router = APIRouter(tags=["auth"])
 
 class AuthService:
     def __init__(self):
