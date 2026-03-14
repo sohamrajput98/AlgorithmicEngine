@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getToken } from './auth'; // 1. Import your getToken function
 
 const api = axios.create({
-  baseURL: 'http://127.0.0.1:8000', // your backend URL
+  baseURL: "https://algorithmicengine.onrender.com", // your backend URL
   headers: {
     'Content-Type': 'application/json',
   },
