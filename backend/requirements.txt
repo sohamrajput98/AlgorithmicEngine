@@ -10,3 +10,4 @@ pymysql==1.0.3
 SQLAlchemy==2.0.43
 uvicorn==0.30.6
 python-multipart==0.0.9
+cryptography==41.0.3
