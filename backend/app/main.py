@@ -1,6 +1,5 @@
-from fastapi import FastAPI, APIRouter
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
 from pathlib import Path
 from fastapi.staticfiles import StaticFiles
 from .config import settings
@@ -29,41 +28,33 @@ app = FastAPI(
 # CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[settings.FRONTEND_URL],  # Vercel frontend URL
+    allow_origins=[settings.FRONTEND_URL],  # your Vercel frontend
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Preflight OPTIONS handler for /auth routes (solves 404 on Render)
-preflight_router = APIRouter(prefix="/auth")
+# --- MOUNT ALL API ROUTERS UNDER /api ---
+app.include_router(health.router, prefix="/api/health")
+app.include_router(auth.router, prefix="/api/auth")
+app.include_router(users.router, prefix="/api/users")
+app.include_router(accounts.router, prefix="/api/accounts")
+app.include_router(problems.router, prefix="/api/problems")
+app.include_router(testcases.router, prefix="/api/testcases")
+app.include_router(submissions.router, prefix="/api/submissions")
+app.include_router(badges.router, prefix="/api/badges")
+app.include_router(analytics.router, prefix="/api/analytics")
+app.include_router(admin.router, prefix="/api/admin")
 
-@preflight_router.options("/{rest_of_path:path}")
-async def preflight_handler(rest_of_path: str):
-    return JSONResponse(status_code=200, content={})
-
-app.include_router(preflight_router)
-
-# Include actual routers
-app.include_router(health.router)
-app.include_router(auth.router)
-app.include_router(users.router)
-app.include_router(accounts.router)
-app.include_router(problems.router)
-app.include_router(testcases.router)
-app.include_router(submissions.router)
-app.include_router(badges.router)
-app.include_router(analytics.router)
-app.include_router(admin.router)
-
-# Conditionally mount frontend build
+# --- STATIC FRONTEND MOUNT ---
 APP_ENV = os.getenv("APP_ENV", "development")
-
 if APP_ENV in ["test", "production"]:
     frontend_dist = Path(__file__).resolve().parent.parent.parent / "frontend" / "dist"
     if frontend_dist.exists():
+        # All non-API routes go to frontend
         app.mount("/", StaticFiles(directory=frontend_dist, html=True), name="frontend")
 
+# --- ROOT IN DEV ONLY ---
 @app.get("/")
 async def root():
     if APP_ENV == "development":
