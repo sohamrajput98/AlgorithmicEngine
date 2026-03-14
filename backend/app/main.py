@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
 from fastapi.staticfiles import StaticFiles
 from .config import settings
-from app.models import Base
+from app.database import Base
 from app.database import engine
 import os
 
