@@ -19,7 +19,7 @@ else:
     db_url = f"mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DB}"
 
 logging.info(f"Connecting to DB: {db_url} (env: {APP_ENV})")
-
+print("DATABASE_URL RAW:", db_url)
 # Create SQLAlchemy engine and session
 engine = create_engine(db_url, echo=True, future=True)
 
