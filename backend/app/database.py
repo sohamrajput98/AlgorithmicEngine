@@ -1,58 +1,40 @@
 import os
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
-from app.config import settings
-from app.database import Base, engine
+import logging
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker, Session
 
-# Routers
-from app.api.endpoints import (
-    health, auth, users, accounts, problems, testcases, submissions,
-    badges, analytics, admin
-)
-
+# Determine environment
 APP_ENV = os.getenv("APP_ENV", "development")
-FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5175")
 
-app = FastAPI(
-    title="AlgorithmicEngine Backend",
-    description="API for AlgorithmicEngine project",
-    version="1.0.0"
+# Configure DB URL
+if APP_ENV == "test":
+    db_url = os.getenv("TEST_DATABASE_URL")
+else:
+    MYSQL_USER = os.getenv("MYSQLUSER")
+    MYSQL_PASSWORD = os.getenv("MYSQLPASSWORD")
+    MYSQL_HOST = os.getenv("MYSQLHOST")
+    MYSQL_PORT = os.getenv("MYSQLPORT")
+    MYSQL_DB = os.getenv("MYSQLDATABASE")
+    db_url = f"mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DB}"
+
+logging.info(f"Connecting to DB: {db_url} (env: {APP_ENV})")
+
+# Create SQLAlchemy engine and session
+engine = create_engine(db_url, echo=True, future=True)
+
+SessionLocal = sessionmaker(
+    autocommit=False,
+    autoflush=False,
+    bind=engine,
+    class_=Session
 )
 
-# CORS
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=[FRONTEND_URL],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"]
-)
+Base = declarative_base()
 
-# Mount routers under /api
-app.include_router(health.router, prefix="/api/health")
-app.include_router(auth.router, prefix="/api/auth")
-app.include_router(users.router, prefix="/api/users")
-app.include_router(accounts.router, prefix="/api/accounts")
-app.include_router(problems.router, prefix="/api/problems")
-app.include_router(testcases.router, prefix="/api/testcases")
-app.include_router(submissions.router, prefix="/api/submissions")
-app.include_router(badges.router, prefix="/api/badges")
-app.include_router(analytics.router, prefix="/api/analytics")
-app.include_router(admin.router, prefix="/api/admin")
-
-# Mount frontend (for production)
-if APP_ENV in ["production", "test"]:
-    frontend_dist = os.path.join(os.path.dirname(__file__), "../../frontend/dist")
-    if os.path.exists(frontend_dist):
-        app.mount("/", StaticFiles(directory=frontend_dist, html=True), name="frontend")
-
-@app.get("/")
-async def root():
-    if APP_ENV == "development":
-        return {"message": "Welcome to AlgorithmicEngine API"}
-
-# Create tables on startup
-@app.on_event("startup")
-def create_tables():
-    Base.metadata.create_all(bind=engine)
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
