@@ -6,10 +6,10 @@ class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
-    email = Column(String, unique=True, nullable=False, index=True)
-    hashed_password = Column(String, nullable=False)
-    display_name = Column(String, nullable=True)
+    email = Column(String(255), unique=True, nullable=False, index=True)
+    hashed_password = Column(String(100), nullable=False)
+    display_name = Column(String(100), nullable=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
-    role = Column(String, default="student")
-    profile_fields = Column(String, default="{}")
-    is_active = Column(Boolean, default=1)  # 1 = active, 0 = inactive
+    role = Column(String(100), default="student")
+    profile_fields = Column(String(100), default="{}")
+    is_active = Column(Boolean, default=True)
