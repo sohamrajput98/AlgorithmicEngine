@@ -20,7 +20,7 @@ class UserResponse(UserBase):
     created_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 # ---------------- Login / Token Schemas ----------------
 class UserLogin(BaseModel):
@@ -40,7 +40,7 @@ class UserOut(BaseModel):
     created_at: Optional[datetime]
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class LoginResponse(BaseModel):
