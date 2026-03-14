@@ -3,6 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
 from fastapi.staticfiles import StaticFiles
 from .config import settings
+from app.models import Base
+from app.database import engine
 import os
 
 # Import routers
@@ -62,3 +64,8 @@ async def root():
     
 for route in app.routes:
     print(route.path, route.methods)
+
+@app.on_event("startup")
+async def create_tables():
+    Base.metadata.create_all(bind=engine)
+    print("✅ All tables created (if missing).")
