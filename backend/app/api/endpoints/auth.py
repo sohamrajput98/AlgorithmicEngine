@@ -17,22 +17,16 @@ router = APIRouter(tags=["auth"])
 
 class AuthService:
 
-    def hash_password(self, password: str) -> str:
-        if isinstance(password, str):
-            password = password.encode("utf-8")
-
-        hashed = bcrypt.hashpw(password, bcrypt.gensalt())
+    def hash_password(self, password) -> str:
+        password_bytes = str(password).encode("utf-8")
+        hashed = bcrypt.hashpw(password_bytes, bcrypt.gensalt())
         return hashed.decode("utf-8")
 
-    def verify_password(self, password: str, hashed: str) -> bool:
-        if isinstance(password, str):
-            password = password.encode("utf-8")
-
-        if isinstance(hashed, str):
-            hashed = hashed.encode("utf-8")
-
-        return bcrypt.checkpw(password, hashed)
-
+    def verify_password(self, password, hashed) -> bool:
+        password_bytes = str(password).encode("utf-8")
+        hashed_bytes = str(hashed).encode("utf-8")
+        return bcrypt.checkpw(password_bytes, hashed_bytes)
+    
     def create_access_token(self, user_id: int) -> str:
         expire = datetime.utcnow() + timedelta(
             minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES
@@ -56,7 +50,7 @@ class AuthService:
         db.add(new_user)
         db.commit()
         db.refresh(new_user)
-
+        print(type(user_create.password), user_create.password)
         return new_user
 
     def login_user(self, user_login: UserLogin, db: Session) -> Token:
